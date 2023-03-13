@@ -1,0 +1,56 @@
+# 通用配置
+server:
+  servlet:
+    context-path: /api
+spring:
+  profiles:
+    active: dev
+  application:
+    name: TeamShare-Backend
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource # 使用Druid数据源
+# 链接池配置
+    druid:
+      # 连接池配置：大小，最小，最大
+      initial-size: 10
+      min-idle: 5
+      max-active: 20
+      # 连接等待超时时间
+      max-wait: 30000
+      # 配置检测可以关闭的空闲连接，间隔时间
+      time-between-eviction-runs-millis: 60000
+      # 配置连接在池中的最小生存时间
+      min-evictable-idle-time-millis: 300000
+      # 检测连接是否有，有效得select语句
+      validation-query: select '1' from dual
+      # 申请连接的时候检测，如果空闲时间大于time-between-eviction-runs-millis，执行validationQuery检测连接是否有效，建议配置为true，不影响性能，并且保证安全性。
+      test-while-idle: true
+      # 申请连接时执行validationQuery检测连接是否有效，建议设置为false，不然会会降低性能
+      test-on-borrow: false
+      # 归还连接时执行validationQuery检测连接是否有效，建议设置为false，不然会会降低性能
+      test-on-return: false
+      # 是否缓存preparedStatement，也就是PSCache  官方建议MySQL下建议关闭   个人建议如果想用SQL防火墙 建议打开
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      max-pool-prepared-statement-per-connection-size: 20
+# 配置QQ邮件信息
+  mail:
+    host: smtp.qq.com
+    username:  # 发送者信箱
+    password:  # 授权码
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete
+      logic-delete-value: 1
+      logic-not-delete-value: 0

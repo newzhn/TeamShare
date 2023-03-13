@@ -1,0 +1,22 @@
+# 开发环境配置
+server:
+  port: 8088
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/teamshare
+    username:  # 数据库用户名
+    password:  # 数据库密码
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    lettuce:
+      pool:
+        max-active: 32
+        max-idle: 16
+        min-idle: 8
+        time-between-eviction-runs: 10s
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher #springboot2.6以上的版本整合swagger或knife4j需要更改匹配策略
