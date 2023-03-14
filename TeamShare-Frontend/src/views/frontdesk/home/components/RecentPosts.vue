@@ -24,7 +24,7 @@
                             <el-icon><User /></el-icon>{{item.userName}}
                         </span>
                         <!-- 发布日期 -->
-                        <span>
+                        <span class="hidden-sm-and-down">
                             <el-icon><Timer /></el-icon>{{item.publishTime}}
                         </span>
                         <!-- 阅读量 -->

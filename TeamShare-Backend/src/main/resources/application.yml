@@ -37,8 +37,8 @@ spring:
 # 配置QQ邮件信息
   mail:
     host: smtp.qq.com
-    username:  # 发送者信箱
-    password:  # 授权码
+    username: zhanhaonan1@qq.com # 发送者信箱
+    password: ujmopkxpajntjbbe # 授权码
     properties:
       mail:
         smtp:

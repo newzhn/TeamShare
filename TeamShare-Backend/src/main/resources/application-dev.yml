@@ -5,8 +5,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/teamshare
-    username:  # 数据库用户名
-    password:  # 数据库密码
+    username: root # 数据库用户名
+    password: zhn123456 # 数据库密码
   redis:
     host: 127.0.0.1
     port: 6379

@@ -17,12 +17,19 @@
                 </el-footer>
             </el-container>
         </div>
+
+        <!-- Backtop 回到顶部 -->
+        <BackTop></BackTop>
+        <!-- 手机端菜单栏 -->
+        <PhoneNav></PhoneNav>
     </div>
 </template>
 
 <script setup>
 import Nav from '@/components/frontdesk/layout/Nav.vue'
 import Footer from '@/components/frontdesk/layout/Footer.vue'
+import BackTop from '../../components/frontdesk/layout/BackTop.vue';
+import PhoneNav from '../../components/frontdesk/layout/PhoneNav.vue';
 
 </script>
 
