@@ -46,15 +46,13 @@
 </template>
 
 <script setup>
-//引入轮播图
-import Carousel from './components/Carousel.vue';
 //引入队伍推荐功能
 import TeamRecommand from './components/TeamRecommand.vue';
 //引入最新文章功能
 import RecentPosts from './components/RecentPosts.vue';
 //引入搜索卡片功能
 import SearchCard from '../../../components/frontdesk/common/Search.vue';
-// 引入队伍推荐功能
+// 引入用户推荐功能
 import UserRecommand from '../../../components/frontdesk/common/UserRecommand.vue';
 // 引入热点文章功能
 import ArticleRecommand from '../../../components/frontdesk/common/ArticleRecommand.vue';

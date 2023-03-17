@@ -24,7 +24,7 @@
                             <el-icon><User /></el-icon>{{item.userName}}
                         </span>
                         <!-- 发布日期 -->
-                        <span class="hidden-sm-and-down">
+                        <span>
                             <el-icon><Timer /></el-icon>{{item.publishTime}}
                         </span>
                         <!-- 阅读量 -->
@@ -32,7 +32,7 @@
                             <el-icon><View /></el-icon>{{item.click}}
                         </span>
                         <!-- 标签 -->
-                        <span style="float: right;">
+                        <span style="float: right;" class="hidden-sm-and-down">
                             <el-row>
                                 <el-tag type="primary">面试题</el-tag>
                                 <el-tag type="primary">打卡</el-tag>

@@ -52,8 +52,6 @@ const loginForm = reactive({
     loginName: '',
     loginPass: '',
 })
-// 子组件的方法
-const player = ref(null);
 // 获取页面元素
 const loginFormRef = ref('');
 

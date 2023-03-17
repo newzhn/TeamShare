@@ -1,26 +1,42 @@
-<!-- 热点文章卡片 -->
-<template> 
+<!-- 已加入队伍卡片 -->
+<template>
     <el-card class="resource" v-loading="state.loading" element-loading-text="玩命加载中..." shadow="hover">
         <div class="resource_title">
-            <h3 class="title"><b>文章推荐</b></h3>
+            <h3 class="title"><b>已加入队伍</b></h3>
         </div>
         <div class="resource_layout">
             <div v-for="(item,index) in articleList">
                 <div class="contentBox" v-if="index===0">
-                    <a :href="'/articleDetails/'+item.articleId" :title="item.articleTitle">
-                        <img v-if="item.articleImgLitimg" class="bannerImg" :src="item.articleImgLitimg"
-                            :alt="item.articleTitle">
-                        <h4 class="title">{{item.articleTitle}}</h4>
-                        <p>{{item.articleClassifyName}} · {{item.publishTime}}</p>
-                    </a>
+                    <h4 class="title">{{item.articleTitle}}</h4>
+                    <p>队长：{{item.articleClassifyName}} · </p>
+                    <el-row style="margin-top: 10px;">
+                        <el-col :span="16">
+                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=1485359480&s=100" />
+                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=2571469810&s=100" />
+                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=919968602&s=100" />
+                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=969025821&s=100" />
+                        </el-col>
+                        <el-col :span="8">
+                            <el-link style="float: right;" type="primary" :underline="false">前往学习<el-icon><DArrowRight /></el-icon></el-link>
+                        </el-col>
+                    </el-row>
                 </div>
                 <div class="contentBox item" v-if="index > 0">
-                    <spana :href="'/articleDetails/'+item.articleId" :title="item.articleTitle">
-                        <div class="articleContent">
-                            <h4 class="title">{{item.articleTitle}}</h4>
-                            <p>{{item.articleClassifyName}} · {{item.publishTime}}</p>
-                        </div>
-                    </spana>
+                    <div class="articleContent">
+                        <h4 class="title">{{item.articleTitle}}</h4>
+                        <p>队长：{{item.articleClassifyName}} · </p>
+                    </div>
+                    <el-row style="margin-top: 10px;">
+                        <el-col :span="16">
+                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=1485359480&s=100" />
+                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=2571469810&s=100" />
+                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=919968602&s=100" />
+                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=969025821&s=100" />
+                        </el-col>
+                        <el-col :span="8">
+                            <el-link style="float: right;" type="primary" :underline="false">前往学习<el-icon><DArrowRight /></el-icon></el-link>
+                        </el-col>
+                    </el-row>
                 </div>
             </div>
         </div>
@@ -36,25 +52,25 @@ const state = reactive({
 const articleList = reactive([
     {
         articleId:1,
-        articleTitle:'剑指Offer图解',
+        articleTitle:'24届考研小组',
         articleImgLitimg:'',
-        articleClassifyName:'张三',
+        articleClassifyName:'亦不可止',
         publishTime:'2023/2/23',
 
     },
     {
         articleId:1,
-        articleTitle:'Mysql的几种日志类型区别',
+        articleTitle:'备战春招Java实习',
         articleImgLitimg:'',
-        articleClassifyName:'李四',
+        articleClassifyName:'黑沫渃DeSplendor.Ghast',
         publishTime:'2023/2/23',
 
     },
     {
         articleId:1,
-        articleTitle:'JDK代理和CGLIB代理区别',
+        articleTitle:'物理实验小组',
         articleImgLitimg:'',
-        articleClassifyName:'王五',
+        articleClassifyName:'橘子皮',
         publishTime:'2023/2/23',
 
     },
@@ -130,7 +146,7 @@ const articleList = reactive([
     }
 
     .resource_layout .contentBox.item {
-        padding-top: 15px;
+        padding-top: 10px;
         border-top: 1px solid #eee;
     }
 
@@ -149,27 +165,10 @@ const articleList = reactive([
         height: 100%;
         object-fit: cover;
     }
-    /* .technology_layout .contentBox.item .title {
-        font-size: 15px;
+
+    .my-link {
+        white-space: nowrap;
         overflow: hidden;
-        -webkit-box-orient: vertical;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        text-align: justify;
-        cursor: pointer;
-        line-height: 20px;
-        color: #727272;
-    } */
-
-    .technology_layout .contentBox.item .title:hover{
-        color: #2fa7b9;
-    }
-
-    .articleContent {
-        width: 100%;
-        float: left;
-        word-break: break-all;
-        text-align: justify;
-        
+        text-overflow: ellipsis;
     }
 </style>

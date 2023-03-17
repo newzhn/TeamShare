@@ -1,6 +1,6 @@
 <!-- 好友推荐卡片 -->
 <template>
-    <el-card class="box-card resource" v-loading="loading" element-loading-text="玩命加载中..." shadow="hover">
+    <el-card class="resource" v-loading="state.loading" element-loading-text="玩命加载中..." shadow="hover">
         <div class="resource_title">
             <h3 class="title"><b>推荐好友</b></h3>
         </div>
@@ -42,14 +42,17 @@
 <script setup>
 import { ref,onMounted } from 'vue';
 import { getRecommandUsers } from '../../../api/frontdesk/home';
+import { reactive } from 'vue';
 
-const loading = ref(true)
+const state = reactive({
+    loading:true
+})
 const recomendUserList = ref([])
 
 onMounted(async () => {
     await getRecommandUsers().then(res => {
         if(res.data.code === 200) {
-            loading.value = false
+            state.loading = false
             const userListData = res.data.data;
             userListData.forEach(user => {
                 if(user.tagNames){

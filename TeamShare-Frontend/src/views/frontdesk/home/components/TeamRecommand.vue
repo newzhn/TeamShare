@@ -9,7 +9,13 @@
                     </template>
                     <el-descriptions-item>一个人学习太无聊了，想找些人一起，不限Java</el-descriptions-item>
                 </el-descriptions>
-                <el-tag style="position: absolute;bottom: 30px;" type="primary">失败总是贯串人生始终</el-tag>
+                <div style="position: absolute;bottom: 30px;display:flex; align-items:center;">
+                    <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=1485359480&s=100" />
+                    <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=2571469810&s=100" />
+                    <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=919968602&s=100" />
+                    <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=969025821&s=100" />
+                    <p style="font-size: small;margin-left: 10px;">4 人学习中</p>
+                </div>
                 <el-link style="float: right;margin-top: 23px;" type="primary" :underline="false">前往组队<el-icon><DArrowRight /></el-icon></el-link>
             </el-card>
         </el-col>

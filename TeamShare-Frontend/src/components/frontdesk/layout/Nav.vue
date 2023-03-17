@@ -1,18 +1,17 @@
 <!-- 前台导航 -->
 <template>
-    <el-menu :default-active="route.path" class="el-menu-demo" mode="horizontal" :ellipsis="false"
-        :router="true" @select="handleSelect">
+    <el-menu :default-active="route.path" class="el-menu-demo" mode="horizontal" :ellipsis="false" :router="true">
         <!-- LOGO -->
         <h2 class="m-title">TeamShare</h2>
         <div class="flex-grow" />
-        <el-menu-item class="hidden-sm-and-down" index="/home">首页</el-menu-item>
-        <el-menu-item class="hidden-sm-and-down" index="/team">组队</el-menu-item>
-        <el-menu-item class="hidden-sm-and-down" index="/community">社区</el-menu-item>
-        <el-menu-item class="hidden-sm-and-down" index="/info">个人</el-menu-item>
+        <el-menu-item class="hidden-xs-only" index="/home">首页</el-menu-item>
+        <el-menu-item class="hidden-xs-only" index="/team">组队</el-menu-item>
+        <el-menu-item class="hidden-xs-only" index="/community">社区</el-menu-item>
+        <el-menu-item class="hidden-xs-only" index="/info">个人</el-menu-item>
         <!-- 根据用户登录态决定展示样式 -->
-        <router-link v-if="Object.keys(userInfo).length === 0" to="/login" class="loginA hidden-sm-and-down">登录/注册</router-link>
-        <el-dropdown class="hidden-sm-and-down" v-if="Object.keys(userInfo).length !== 0">
-            <el-avatar :size="40" style="margin-top: 8px;margin-left: 20px;" :src="user.avatarUrl"/>
+        <router-link v-if="!userStore.isLogin()" to="/login" class="loginA hidden-xs-only">登录/注册</router-link>
+        <el-dropdown class="hidden-xs-only" v-if="userStore.isLogin()">
+            <el-avatar :size="40" style="margin-top: 8px;margin-left: 20px;" :src="userInfo.avatarUrl"/>
             <template #dropdown>
                 <el-dropdown-menu>
                     <el-dropdown-item>
@@ -32,22 +31,25 @@
 </template>
 
 <script setup>
-import { reactive,onMounted } from "vue";
-import { useRoute,useRouter } from "vue-router"
+import { onMounted } from "vue";
+import { useRoute } from "vue-router"
+import { useUserStore } from "@/stores/user";
+import { storeToRefs } from 'pinia'
 import { getCurrentUser } from "@/api/frontdesk/common.js"
 import { userLogout } from "@/api/login/login.js"
 import { ElNotification } from 'element-plus'
 
 const route = useRoute()
-const router = useRouter()
-const handleSelect = (key, keyPath) => {
-    console.log(key, keyPath)
-}
-const userInfo = reactive({})
+// 获取pinia中公共存储的用户信息，
+const userStore = useUserStore()
+const { userInfo } = storeToRefs(userStore)
 
+// 退出登录
 const logout = () => {
     userLogout().then(res => {
         if(res.data.code === 200 && res.data.data) {
+            // 清除store中存储的登录信息
+            userStore.updateUserInfo()
             location.reload();
         } else {
             ElNotification({
@@ -61,10 +63,12 @@ const logout = () => {
     
 }
 
+// 加载当前登录用户信息
 onMounted(() => {
     getCurrentUser().then(res => {
         if(res.data.code === 200) {
-            Object.assign(userInfo, reactive(res.data.data))
+            // 将信息存储store
+            userStore.updateUserInfo(res.data.data)
         }
     }).catch(() => {
         console.log('请求发送失败');
