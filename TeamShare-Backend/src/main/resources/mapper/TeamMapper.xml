@@ -7,18 +7,22 @@
     <resultMap id="BaseResultMap" type="com.zhn.teamsharebackend.domain.Team">
             <id property="teamId" column="team_id" jdbcType="BIGINT"/>
             <result property="teamName" column="team_name" jdbcType="VARCHAR"/>
-            <result property="teamSignature" column="team_signature" jdbcType="VARCHAR"/>
+            <result property="teamDescribe" column="team_describe" jdbcType="VARCHAR"/>
+            <result property="teamSize" column="team_size" jdbcType="SMALLINT"/>
             <result property="memberIds" column="member_ids" jdbcType="VARCHAR"/>
             <result property="captainId" column="captain_id" jdbcType="BIGINT"/>
             <result property="teamStatus" column="team_status" jdbcType="INTEGER"/>
+            <result property="teamPassword" column="team_password" jdbcType="VARCHAR"/>
+            <result property="deadline" column="deadline" jdbcType="TIMESTAMP"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        team_id,team_name,team_signature,
-        member_ids,captain_id,team_status,
+        team_id,team_name,team_describe,
+        team_size,member_ids,captain_id,
+        team_status,team_password,deadline,
         create_time,update_time,is_delete
     </sql>
 </mapper>

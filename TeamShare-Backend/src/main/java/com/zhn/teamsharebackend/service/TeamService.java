@@ -1,5 +1,6 @@
 package com.zhn.teamsharebackend.service;
 
+import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.Team;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -10,4 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface TeamService extends IService<Team> {
 
+    Result<Boolean> createTeam(Team team);
+
+    Result<Boolean> checkTeamName(String teamName);
 }
