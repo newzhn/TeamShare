@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import com.zhn.teamsharebackend.domain.dto.UserDTO;
 import lombok.Data;
 
 /**
@@ -27,7 +30,7 @@ public class Team implements Serializable {
     private String teamName;
 
     /**
-     * 队伍标语
+     * 队伍描述
      */
     private String teamDescribe;
 
@@ -78,6 +81,11 @@ public class Team implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public Team(long teamId, String memberIds) {
+        this.teamId = teamId;
+        this.memberIds = memberIds;
+    }
 
     @Override
     public boolean equals(Object that) {

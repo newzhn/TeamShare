@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 用户表
@@ -14,6 +15,7 @@ import lombok.Data;
  */
 @TableName(value ="user")
 @Data
+@NoArgsConstructor
 public class User implements Serializable {
     /**
      * 用户ID
@@ -69,7 +71,7 @@ public class User implements Serializable {
     /**
      * json格式保存的队伍名列表
      */
-    private String teamNames;
+    private String teamIds;
 
     /**
      * 用户状态，0是正常，1是被拉黑等
@@ -98,6 +100,11 @@ public class User implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public User(long userId,String teamIds) {
+        this.userId = userId;
+        this.teamIds = teamIds;
+    }
 
     public User(String nickname,String userName,String userPassword,String email,String qq,String avatarUrl) {
         this.nickname = nickname;
@@ -130,7 +137,7 @@ public class User implements Serializable {
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getQq() == null ? other.getQq() == null : this.getQq().equals(other.getQq()))
             && (this.getTagNames() == null ? other.getTagNames() == null : this.getTagNames().equals(other.getTagNames()))
-            && (this.getTeamNames() == null ? other.getTeamNames() == null : this.getTeamNames().equals(other.getTeamNames()))
+            && (this.getTeamIds() == null ? other.getTeamIds() == null : this.getTeamIds().equals(other.getTeamIds()))
             && (this.getUserStatus() == null ? other.getUserStatus() == null : this.getUserStatus().equals(other.getUserStatus()))
             && (this.getUserRole() == null ? other.getUserRole() == null : this.getUserRole().equals(other.getUserRole()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
@@ -152,7 +159,7 @@ public class User implements Serializable {
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
         result = prime * result + ((getQq() == null) ? 0 : getQq().hashCode());
         result = prime * result + ((getTagNames() == null) ? 0 : getTagNames().hashCode());
-        result = prime * result + ((getTeamNames() == null) ? 0 : getTeamNames().hashCode());
+        result = prime * result + ((getTeamIds() == null) ? 0 : getTeamIds().hashCode());
         result = prime * result + ((getUserStatus() == null) ? 0 : getUserStatus().hashCode());
         result = prime * result + ((getUserRole() == null) ? 0 : getUserRole().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
@@ -177,7 +184,7 @@ public class User implements Serializable {
         sb.append(", email=").append(email);
         sb.append(", qq=").append(qq);
         sb.append(", tagNames=").append(tagNames);
-        sb.append(", teamNames=").append(teamNames);
+        sb.append(", teamNames=").append(teamIds);
         sb.append(", userStatus=").append(userStatus);
         sb.append(", userRole=").append(userRole);
         sb.append(", createTime=").append(createTime);

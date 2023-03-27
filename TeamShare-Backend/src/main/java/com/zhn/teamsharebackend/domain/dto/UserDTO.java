@@ -1,10 +1,12 @@
 package com.zhn.teamsharebackend.domain.dto;
 
+import com.zhn.teamsharebackend.domain.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author zhn
@@ -62,7 +64,7 @@ public class UserDTO {
     /**
      * json格式保存的队伍名列表
      */
-    private String teamNames;
+    private String teamIds;
 
     /**
      * 用户状态，0是正常，1是被拉黑等

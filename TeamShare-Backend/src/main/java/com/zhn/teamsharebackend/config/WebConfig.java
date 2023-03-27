@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor()).order(3);
+        registry.addInterceptor(new LoginInterceptor()).excludePathPatterns("/login", "/register").order(3);
         registry.addInterceptor(new RefreshTokenInterceptor(stringRedisTemplate)).order(1);
         registry.addInterceptor(new CorsInterceptor()).order(0);
     }

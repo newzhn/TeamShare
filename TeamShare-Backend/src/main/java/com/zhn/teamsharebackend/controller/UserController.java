@@ -22,14 +22,14 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @GetMapping("/currentUser")
-    public Result<UserDTO> getCurrentUser(HttpServletRequest request) {
+    @GetMapping("/getLoginUser")
+    public Result<UserDTO> getLoginUser(HttpServletRequest request) {
         //获取token
         String token = request.getHeader("authorization");
         if(StrUtil.isBlank(token)) {
             return Result.ok();
         }
-        return userService.getCurrentUser(token);
+        return userService.getLoginUser(token);
     }
 
     @GetMapping("/recommend")

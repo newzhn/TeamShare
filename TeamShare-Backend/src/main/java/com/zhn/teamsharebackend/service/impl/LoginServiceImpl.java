@@ -62,7 +62,7 @@ public class LoginServiceImpl implements LoginService {
         String key = RedisConstant.LOGIN_USER_KEY + token;
         UserDTO userDTO = BeanUtil.copyProperties(user, UserDTO.class);
         Map<String, Object> userMap = BeanUtil.beanToMap(userDTO, new HashMap<>(), CopyOptions.create()
-                .setIgnoreNullValue(false)
+                .setIgnoreNullValue(true)
                 .setFieldValueEditor((fieldName, fieldValue) -> fieldValue == null ? null : fieldValue.toString()));
         stringRedisTemplate.opsForHash().putAll(key,userMap);
         //设置用户信息有效期

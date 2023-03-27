@@ -15,7 +15,7 @@
             <result property="email" column="email" jdbcType="VARCHAR"/>
             <result property="qq" column="qq" jdbcType="VARCHAR"/>
             <result property="tagNames" column="tag_names" jdbcType="VARCHAR"/>
-            <result property="teamNames" column="team_names" jdbcType="VARCHAR"/>
+            <result property="teamIds" column="team_ids" jdbcType="VARCHAR"/>
             <result property="userStatus" column="user_status" jdbcType="INTEGER"/>
             <result property="userRole" column="user_role" jdbcType="INTEGER"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
@@ -27,7 +27,7 @@
         user_id,nickname,user_name,
         user_password,avatar_url,signature,
         gender,email,qq,
-        tag_names,team_names,user_status,
+        tag_names,team_ids,user_status,
         user_role,create_time,update_time,
         is_delete
     </sql>

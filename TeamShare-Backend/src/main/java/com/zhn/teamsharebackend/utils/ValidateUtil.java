@@ -49,24 +49,25 @@ public class ValidateUtil {
         }
     }
 
-    public static void teamValidate(Team team) {
+    public static Result<Boolean> teamValidate(Team team) {
         if (StrUtil.isBlank(team.getTeamName())) {
-            throw new BusinessException(ErrorCode.NULL_PARAMS_ERROR,"队伍名不能为空");
+            return Result.fail(ErrorCode.NULL_PARAMS_ERROR, true, "队伍名不能为空");
         }
         if (StrUtil.isBlank(team.getTeamDescribe())) {
-            throw new BusinessException(ErrorCode.NULL_PARAMS_ERROR,"队伍描述不能为空");
+            return Result.fail(ErrorCode.NULL_PARAMS_ERROR, true, "队伍描述不能为空");
         }
         if (team.getTeamSize() < 2 || team.getTeamSize() > 10) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"队伍大小不符合规定");
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "队伍大小不符合规定");
         }
         if (DateUtil.betweenMs(new Date(),team.getDeadline()) < 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"队伍截止时间设置错误");
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "队伍截止时间设置错误");
         }
         if (team.getTeamStatus() != 1 && team.getTeamStatus() != 2) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"队伍状态设置错误");
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "队伍状态设置错误");
         }
         if (team.getTeamStatus() == 2 && StrUtil.isBlank(team.getTeamPassword())) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"队伍密码不能为空");
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "队伍密码不能为空");
         }
+        return Result.ok(false);
     }
 }

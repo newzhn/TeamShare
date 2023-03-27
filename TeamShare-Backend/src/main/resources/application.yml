@@ -1,15 +1,20 @@
-# 通用配置
 server:
+  port: 8088
   servlet:
     context-path: /api
 spring:
+  config:
+    import: optional:file:.env[.properties]
   profiles:
     active: dev
   application:
     name: TeamShare-Backend
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource # 使用Druid数据源
-# 链接池配置
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST_PORT}/${MYSQL_DATABASE}
+    username: ${MYSQL_USERNAME} # 数据库用户名
+    password: ${MYSQL_PASSWORD} # 数据库密码
     druid:
       # 连接池配置：大小，最小，最大
       initial-size: 10
@@ -17,34 +22,30 @@ spring:
       max-active: 20
       # 连接等待超时时间
       max-wait: 30000
-      # 配置检测可以关闭的空闲连接，间隔时间
-      time-between-eviction-runs-millis: 60000
-      # 配置连接在池中的最小生存时间
-      min-evictable-idle-time-millis: 300000
-      # 检测连接是否有，有效得select语句
-      validation-query: select '1' from dual
-      # 申请连接的时候检测，如果空闲时间大于time-between-eviction-runs-millis，执行validationQuery检测连接是否有效，建议配置为true，不影响性能，并且保证安全性。
-      test-while-idle: true
-      # 申请连接时执行validationQuery检测连接是否有效，建议设置为false，不然会会降低性能
-      test-on-borrow: false
-      # 归还连接时执行validationQuery检测连接是否有效，建议设置为false，不然会会降低性能
-      test-on-return: false
-      # 是否缓存preparedStatement，也就是PSCache  官方建议MySQL下建议关闭   个人建议如果想用SQL防火墙 建议打开
-      # 打开PSCache，并且指定每个连接上PSCache的大小
-      pool-prepared-statements: true
-      max-open-prepared-statements: 20
-      max-pool-prepared-statement-per-connection-size: 20
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    database: ${REDIS_DATABASE}
+    lettuce:
+      pool:
+        max-active: 32
+        max-idle: 16
+        min-idle: 8
+        time-between-eviction-runs: 10s
 # 配置QQ邮件信息
   mail:
-    host: smtp.qq.com
-    username: zhanhaonan1@qq.com # 发送者信箱
-    password: ujmopkxpajntjbbe # 授权码
+    host: ${EMAIL_HOST} # 邮箱服务器地址
+    username: ${EMAIL_USERNAME} # 发送者信箱
+    password: ${EMAIL_PASSWORD} # 授权码
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher #springboot2.6以上的版本整合swagger或knife4j需要更改匹配策略
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
