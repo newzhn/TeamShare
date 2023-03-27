@@ -5,16 +5,15 @@
             <h3 class="title"><b>已加入队伍</b></h3>
         </div>
         <div class="resource_layout">
-            <div v-for="(item,index) in articleList">
+            <div v-for="(team,index) in state.joinedTeamList" :key="team.teamId">
                 <div class="contentBox" v-if="index===0">
-                    <h4 class="title">{{item.articleTitle}}</h4>
-                    <p>队长：{{item.articleClassifyName}} · </p>
+                    <!-- 队伍名和队长名 -->
+                    <h4 class="title">{{ team.teamName }}</h4>
+                    <p>队长：{{ team.captain.nickname }} · </p>
                     <el-row style="margin-top: 10px;">
                         <el-col :span="16">
-                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=1485359480&s=100" />
-                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=2571469810&s=100" />
-                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=919968602&s=100" />
-                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=969025821&s=100" />
+                            <!-- 队员头像列表 -->
+                            <el-avatar v-for="member in team.members" :key="member.userId" :size="20" :src="member.avatarUrl" />
                         </el-col>
                         <el-col :span="8">
                             <el-link style="float: right;" type="primary" :underline="false">前往学习<el-icon><DArrowRight /></el-icon></el-link>
@@ -23,15 +22,13 @@
                 </div>
                 <div class="contentBox item" v-if="index > 0">
                     <div class="articleContent">
-                        <h4 class="title">{{item.articleTitle}}</h4>
-                        <p>队长：{{item.articleClassifyName}} · </p>
+                        <h4 class="title">{{ team.teamName }}</h4>
+                        <p>队长：{{ team.captain.nickname }} · </p>
                     </div>
                     <el-row style="margin-top: 10px;">
                         <el-col :span="16">
-                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=1485359480&s=100" />
-                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=2571469810&s=100" />
-                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=919968602&s=100" />
-                            <el-avatar :size="20" src="https://q1.qlogo.cn/g?b=qq&nk=969025821&s=100" />
+                            <!-- 队员头像列表 -->
+                            <el-avatar v-for="member in team.members" :key="member.userId" :size="20" :src="member.avatarUrl" />
                         </el-col>
                         <el-col :span="8">
                             <el-link style="float: right;" type="primary" :underline="false">前往学习<el-icon><DArrowRight /></el-icon></el-link>
@@ -44,37 +41,38 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, onMounted, watch } from 'vue';
+import { getJoinedTeamList } from '@/api/frontdesk/team.js'
+import { useTeamStore } from '../../../../stores/team';
+
+const store = useTeamStore()
 
 const state = reactive({
-    loading:false
+    // 当前组件加载状态
+    loading:false,
+    // 已加入队伍列表
+    joinedTeamList:[]
 })
-const articleList = reactive([
-    {
-        articleId:1,
-        articleTitle:'24届考研小组',
-        articleImgLitimg:'',
-        articleClassifyName:'亦不可止',
-        publishTime:'2023/2/23',
 
-    },
-    {
-        articleId:1,
-        articleTitle:'备战春招Java实习',
-        articleImgLitimg:'',
-        articleClassifyName:'黑沫渃DeSplendor.Ghast',
-        publishTime:'2023/2/23',
+const getData = () => {
+    getJoinedTeamList().then(res => {
+        if(res.data.code === 200) {
+            state.joinedTeamList = res.data.data
+        }
+    }).catch(() => {
+        console.log('请求发送失败');
+    })
+}
 
-    },
-    {
-        articleId:1,
-        articleTitle:'物理实验小组',
-        articleImgLitimg:'',
-        articleClassifyName:'橘子皮',
-        publishTime:'2023/2/23',
+// 组件加载时获取一次加入队伍信息
+onMounted(() => {
+    getData()
+})
 
-    },
-])
+// 监视全局状态中的joinFlag，发生变化时重新获取数据
+watch(() => store.joinFlag, (newVal, oldVal) => {
+    getData()
+})
 </script>
 
 <style scoped>

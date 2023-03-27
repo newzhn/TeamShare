@@ -16,7 +16,7 @@
                         <!-- 密码 -->
                         <el-form-item prop="loginPass">
                             <el-input :prefix-icon="Lock" v-model="loginForm.loginPass" show-password autocomplete="off"
-                                placeholder="请输入密码" />
+                                placeholder="请输入密码" @keyup.enter="submitLoginInfo"/>
                         </el-form-item>
                         <!-- 登录按钮 -->
                         <el-form-item prop="loginBtn" class="loginBtn">

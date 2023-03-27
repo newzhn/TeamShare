@@ -1,6 +1,7 @@
 // 配置axios
 import axios from "axios";
 import QueryString from "qs";
+import { ElMessage } from "element-plus";
 
 // 创建配置axios
 const newAxios = axios.create({
@@ -17,7 +18,6 @@ newAxios.interceptors.request.use(function (config) {
             return QueryString.stringify(params, {arrayFormat: 'repeat'})
         }
     }
-    // 在发送请求之前做些什么
     // 每次请求都会带上本地存储的authorization
     const token = localStorage.getItem('authorization');
     if (token) {
@@ -26,14 +26,17 @@ newAxios.interceptors.request.use(function (config) {
     return config;
 }, function (error) {
     // 对请求错误做些什么
-    console.log('请求发送失败');
+    ElMessage.error("请求发送失败，请检查你的网络设置")
     return Promise.reject(error);
 });
 
 // 添加响应拦截器
 newAxios.interceptors.response.use(function (response) {
     // 2xx 范围内的状态码都会触发该函数。
-    // 对响应数据做点什么
+    // 拦截请求响应成功但自定义错误码不正确的响应进行全局处理
+    if(response.data.code !== 200) {
+        ElMessage.error(response.data.message)
+    }
     return response;
 }, function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。

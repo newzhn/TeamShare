@@ -8,16 +8,12 @@
             <el-row :gutter="20">
                 <!-- 左侧具体内容，占17列 -->
                 <el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17">
-                    <!-- 队伍标签页 -->
-                    <el-tabs :tab-position="state.tabPosition" class="demo-tabs">
-                        <el-tab-pane label="公开">
-                            <!-- 队伍列表 -->
-                            <TeamListPane ></TeamListPane>
-                        </el-tab-pane>
-                        <el-tab-pane label="加密">
-                            <!-- 队伍列表 -->
-                            <TeamListPane ></TeamListPane>
-                        </el-tab-pane>
+                    <el-tabs v-model="store.teamTab" :tab-position="state.tabPosition">
+                        <!-- 队伍状态标签 -->
+                        <el-tab-pane label="公开" :name="1"></el-tab-pane>
+                        <el-tab-pane label="加密" :name="2"></el-tab-pane>
+                        <!-- 队伍列表，根据状态标签决定不同的传参 -->
+                        <TeamListPane></TeamListPane>
                     </el-tabs>
                 </el-col>
                 <!-- 右侧边栏，占7列 -->
@@ -34,30 +30,29 @@
 </template>
 
 <script setup>
-import { reactive,onMounted,onUnmounted } from 'vue';
+import { reactive,watchEffect } from 'vue';
+import { useTeamStore } from '../../../stores/team';
 import TeamListPane from './components/TeamListPane.vue'
 import JoinedTeamList from './components/JoinedTeamList.vue';
 
-
+const store = useTeamStore()
 const state = reactive({
     // 标签页展示位置控制，移动端顶端展示
     tabPosition:'left',
 })
 
 // 监听页面大小变化改变展示样式
-const handleResize = () => {
-    if (window.innerWidth <= 768) {
+watchEffect(() => {
+    // 获取窗口宽度
+    const screenWidth = window.innerWidth
+
+    // 判断当前是否在移动端
+    if (screenWidth < 768) {
         state.tabPosition = 'top'
     } else {
         state.tabPosition = 'left'
     }
-}
-window.addEventListener('resize', handleResize);
-
-// 在组件销毁时移除事件监听器
-onUnmounted(() => {
-    window.removeEventListener('resize', handleResize);
-});
+})
 </script>
 
 <style scoped>
