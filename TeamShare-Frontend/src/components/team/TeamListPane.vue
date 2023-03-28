@@ -90,10 +90,10 @@
 <script setup>
 import { Search } from '@element-plus/icons-vue';
 import { reactive, ref, onMounted, watch } from 'vue'
-import { useUserStore } from '@/stores/user';
-import { useTeamStore } from '../../../../stores/team';
+import { useUserStore } from '@/stores/user.js';
+import { useTeamStore } from '@/stores/team.js';
 import { ElDrawer, ElMessageBox, ElMessage } from 'element-plus'
-import { createTeam,checkTeamName,getTeamListForStatus,joinInTeam,searchTeamList } from '@/api/frontdesk/team.js'
+import { createTeam,checkTeamName,getTeamListForStatus,joinInTeam,searchTeamList } from '@/api/team.js'
 import dateFliter from '@/utils/time.js'
 
 // 全局用户状态

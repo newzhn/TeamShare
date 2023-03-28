@@ -1,69 +1,77 @@
-<!-- 好友推荐卡片 -->
+<!-- 已加入队伍卡片 -->
 <template>
     <el-card class="resource" v-loading="state.loading" element-loading-text="玩命加载中..." shadow="hover">
         <div class="resource_title">
-            <h3 class="title"><b>推荐好友</b></h3>
+            <h3 class="title"><b>已加入队伍</b></h3>
         </div>
         <div class="resource_layout">
-            <!-- 推荐好友展示列表 -->
-            <div v-for="(user,index) in recomendUserList" :key="user.userId">
-                <el-row :gutter="10">
-                    <el-space :size="0">
-                        <!-- 头像 -->
-                        <el-col :span="5">
-                            <el-avatar :size="40" :src="user.avatarUrl" />
+            <div v-for="(team,index) in state.joinedTeamList" :key="team.teamId">
+                <div class="contentBox" v-if="index===0">
+                    <!-- 队伍名和队长名 -->
+                    <h4 class="title">{{ team.teamName }}</h4>
+                    <p>队长：{{ team.captain.nickname }} · </p>
+                    <el-row style="margin-top: 10px;">
+                        <el-col :span="16">
+                            <!-- 队员头像列表 -->
+                            <el-avatar v-for="member in team.members" :key="member.userId" :size="20" :src="member.avatarUrl" />
                         </el-col>
-                        <!-- 个人信息 -->
-                        <el-col :span="19">
-                            <el-space wrap direction="vertical" alignment="flex-start" :size="4">
-                                <!-- 昵称 -->
-                                <el-row>
-                                    <el-link class="my-link" to="https://element-plus.org" target="_blank" :underline="false" >
-                                        {{ user.nickname }}
-                                    </el-link>
-                                </el-row>
-                                <!-- 标签,只展示两个标签 -->
-                                <el-row>
-                                    <el-space>
-                                        <el-tag v-if="user.tagNames" v-for="tagIndex in 2" type="info" effect="light" size="small">{{ user.tagNames[tagIndex - 1] }}</el-tag>
-                                        <el-tag type="info" effect="light" size="small">....</el-tag>
-                                    </el-space>
-                                </el-row>
-                            </el-space>
+                        <el-col :span="8">
+                            <el-link style="float: right;" type="primary" :underline="false">前往学习<el-icon><DArrowRight /></el-icon></el-link>
                         </el-col>
-                    </el-space>
-                </el-row>
-                <el-divider v-if="index != recomendUserList.length - 1" style="margin-top: 8px;margin-bottom: 8px;"/>
+                    </el-row>
+                </div>
+                <div class="contentBox item" v-if="index > 0">
+                    <div class="articleContent">
+                        <h4 class="title">{{ team.teamName }}</h4>
+                        <p>队长：{{ team.captain.nickname }} · </p>
+                    </div>
+                    <el-row style="margin-top: 10px;">
+                        <el-col :span="16">
+                            <!-- 队员头像列表 -->
+                            <el-avatar v-for="member in team.members" :key="member.userId" :size="20" :src="member.avatarUrl" />
+                        </el-col>
+                        <el-col :span="8">
+                            <el-link style="float: right;" type="primary" :underline="false">前往学习<el-icon><DArrowRight /></el-icon></el-link>
+                        </el-col>
+                    </el-row>
+                </div>
             </div>
         </div>
     </el-card>
 </template>
 
 <script setup>
-import { ref,onMounted } from 'vue';
-import { getRecommandUsers } from '../../../api/frontdesk/home';
-import { reactive } from 'vue';
+import { reactive, onMounted, watch } from 'vue';
+import { getJoinedTeamList } from '@/api/team.js'
+import { useTeamStore } from '@/stores/team.js';
+
+const store = useTeamStore()
 
 const state = reactive({
-    loading:true
+    // 当前组件加载状态
+    loading:false,
+    // 已加入队伍列表
+    joinedTeamList:[]
 })
-const recomendUserList = ref([])
 
-onMounted(async () => {
-    await getRecommandUsers().then(res => {
+const getData = () => {
+    getJoinedTeamList().then(res => {
         if(res.data.code === 200) {
-            state.loading = false
-            const userListData = res.data.data;
-            userListData.forEach(user => {
-                if(user.tagNames){
-                    user.tagNames = JSON.parse(user.tagNames)
-                }
-            });
-            recomendUserList.value = userListData
+            state.joinedTeamList = res.data.data
         }
     }).catch(() => {
         console.log('请求发送失败');
     })
+}
+
+// 组件加载时获取一次加入队伍信息
+onMounted(() => {
+    getData()
+})
+
+// 监视全局状态中的joinFlag，发生变化时重新获取数据
+watch(() => store.joinFlag, (newVal, oldVal) => {
+    getData()
 })
 </script>
 
@@ -136,7 +144,7 @@ onMounted(async () => {
     }
 
     .resource_layout .contentBox.item {
-        padding-top: 15px;
+        padding-top: 10px;
         border-top: 1px solid #eee;
     }
 

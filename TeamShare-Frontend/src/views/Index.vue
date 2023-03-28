@@ -1,4 +1,3 @@
-<!-- 前台模板 -->
 <template>
     <div id="frontdesk">
         <div class="common-layout">
@@ -9,7 +8,7 @@
                 </el-header>
                 <!-- 页面内容 -->
                 <el-main>
-                    <router-view></router-view>
+                    <PageLayout></PageLayout>
                 </el-main>
                 <!-- 底部页脚 -->
                 <el-footer class="front_footer">
@@ -26,11 +25,11 @@
 </template>
 
 <script setup>
-import Nav from '@/components/frontdesk/layout/Nav.vue'
-import Footer from '@/components/frontdesk/layout/Footer.vue'
-import BackTop from '../../components/frontdesk/layout/BackTop.vue';
-import PhoneNav from '../../components/frontdesk/layout/PhoneNav.vue';
-
+import Nav from '@/components/common/Nav.vue'
+import Footer from '@/components/common/Footer.vue'
+import BackTop from '@/components/common/BackTop.vue';
+import PhoneNav from '@/components/common/PhoneNav.vue';
+import PageLayout from '@/components/layout/PageLayout.vue';
 </script>
 
 <style scoped>
@@ -38,8 +37,5 @@ import PhoneNav from '../../components/frontdesk/layout/PhoneNav.vue';
 .front_footer {
     border-top: 1px solid #ebebeb;
     background: #fff;
-}
-.el-container {
-    min-height: 100vh;
 }
 </style>

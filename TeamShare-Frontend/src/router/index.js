@@ -1,40 +1,41 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
+  // 登录注册
   {
     name:'login',
     path:'/login',
-    component:() => import('@/views/login/Main.vue'),
+    component:() => import('@/views/login/Login.vue'),
     meta: { title: '登录 - 每天都是不一样' },
   },
   {
     name:'register',
     path:'/register',
-    component:() => import('@/views/register/Main.vue'),
+    component:() => import('@/views/register/Register.vue'),
     meta: { title: '注册 - 每天都是不一样' },
   },
-  // 前台路由
+  // 业务路由
   {
     path:'/',
-    component:() => import('../views/frontdesk/Main.vue'),
-    redirect:'home',
+    component:() => import('@/views/Index.vue'),
+    redirect:'/home',
     children:[
       {
         name:'home',
         path:'/home',
-        component:() => import('../views/frontdesk/home/Home.vue'),
+        component:() => import('@/views/home/Home.vue'),
         meta: { title: '首页 - 每天都是不一样' },
       },
       {
         name:'team',
         path:'/team',
-        component:() => import('../views/frontdesk/team/Team.vue'),
+        component:() => import('@/views/team/Team.vue'),
         meta: { title: '组队 - 每天都是不一样' },
       },
       {
         name:'community',
         path:'/community',
-        component:() => import('../views/frontdesk/community/Community.vue'),
+        component:() => import('@/views/community/Community.vue'),
         meta: { title: '社区 - 每天都是不一样' },
       },
     ]

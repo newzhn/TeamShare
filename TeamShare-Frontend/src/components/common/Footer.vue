@@ -6,7 +6,7 @@
                 <div class="menuBox">
                     <router-link to="/home">首页</router-link>
                     <router-link to="/team">组队</router-link>
-                    <router-link to="/community">组队</router-link>
+                    <router-link to="/community">社区</router-link>
                 </div>
                 <div class="copyright viaWrapper">
                     <i class="via"></i>相信有一天, 理想主义终将所向披靡.

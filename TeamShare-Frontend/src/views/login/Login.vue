@@ -44,7 +44,7 @@
 <script setup>
 import { ref,reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { userLogin } from "@/api/login/login.js"
+import { userLogin } from "@/api/login.js"
 import { ElLoading,ElNotification } from 'element-plus'
 
 const router = useRouter();

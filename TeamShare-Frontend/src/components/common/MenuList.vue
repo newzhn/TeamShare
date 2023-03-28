@@ -19,29 +19,35 @@
             <span>登录/注册</span>
         </el-menu-item>
         <el-menu-item index="/backstageHome" v-show="userInfo" @click="closeDrawer">
-            <span>已登录，进入后台</span>
+            <span>进入后台</span>
         </el-menu-item>
-        
+        <el-menu-item index="/logout" v-show="userInfo" @click="logout">
+            <span>退出登录</span>
+        </el-menu-item>
     </el-menu>
 </template>
 
 <script>
-    import { reactive,toRefs,onMounted, } from "vue"
+    import { onMounted, } from "vue"
     import { useRoute } from "vue-router"
-    import { getCurrentUser } from "@/api/frontdesk/common.js"
+    import { getCurrentUser } from "@/api/common.js"
+    import { userLogout } from "@/api/login.js"
+    import { useUserStore } from "@/stores/user";
+    import { storeToRefs } from 'pinia'
+
     export default {
         emits: ["onCloseDrawer"],
         setup(props, {emit}) {
             const route = useRoute();
-            const state = reactive({
-                // 当前登录的用户信息
-                userInfo: '',
-            });
+            // 获取pinia中公共存储的用户信息，
+            const userStore = useUserStore()
+            const { userInfo } = storeToRefs(userStore)
+
             onMounted(() => {
                 // 获取用户信息
                 getCurrentUser().then(res => {
                     if(res.data.code === 200) {
-                        state.userInfo = res.data.data
+                        userStore.updateUserInfo(res.data.data)
                     }
                 }).catch(() => {
                     console.log('请求发送失败');
@@ -51,10 +57,23 @@
             const closeDrawer = ()=>{
                 emit("onCloseDrawer", false);
             }
+            // 退出登录
+            const logout = () => {
+                userLogout().then(res => {
+                    if(res.data.code === 200 && res.data.data) {
+                        // 清除store中存储的登录信息
+                        userStore.updateUserInfo()
+                        location.reload();
+                    }
+                }).catch(() => {
+                    console.log('请求发送失败');
+                })
+                
+            }
             return {
-                ...toRefs(state),
                 route,
-                closeDrawer
+                closeDrawer,
+                logout
             }
         }
     }

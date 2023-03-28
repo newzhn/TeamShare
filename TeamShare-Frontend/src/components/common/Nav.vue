@@ -18,7 +18,7 @@
                         <el-link href="/info" :underline="false">个人主页</el-link>
                     </el-dropdown-item>
                     <!-- 只有管理员角色展示此选项 -->
-                    <el-dropdown-item>
+                    <el-dropdown-item v-if="userInfo.userRole === 2">
                         <el-link href="/admin" :underline="false">进入后台</el-link>
                     </el-dropdown-item>
                     <el-dropdown-item @click="logout()">
@@ -35,9 +35,8 @@ import { onMounted } from "vue";
 import { useRoute } from "vue-router"
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from 'pinia'
-import { getCurrentUser } from "@/api/frontdesk/common.js"
-import { userLogout } from "@/api/login/login.js"
-import { ElNotification } from 'element-plus'
+import { getCurrentUser } from "@/api/common.js"
+import { userLogout } from "@/api/login.js"
 
 const route = useRoute()
 // 获取pinia中公共存储的用户信息，
@@ -51,11 +50,6 @@ const logout = () => {
             // 清除store中存储的登录信息
             userStore.updateUserInfo()
             location.reload();
-        } else {
-            ElNotification({
-                title: '退出失败',
-                type: 'error'
-            })
         }
     }).catch(() => {
         console.log('请求发送失败');

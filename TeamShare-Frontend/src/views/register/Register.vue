@@ -63,7 +63,7 @@
 <script setup>
 import { ref,reactive } from 'vue';
 import { User,Lock,Right,Message,Edit } from '@element-plus/icons-vue'
-import { checkUserName,checkEmail,sendCode,userRegister } from "@/api/register/register.js"
+import { checkUserName,checkEmail,sendCode,userRegister } from "@/api/register.js"
 import { ElMessage,ElLoading,ElNotification } from 'element-plus'
 
 // 获取验证码60秒倒计时

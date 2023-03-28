@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { onMounted,reactive,toRefs } from "vue"
+import { onMounted,reactive } from "vue"
 import { Search } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
@@ -24,9 +24,10 @@ onMounted(() => {
     // 生成随机数，用户改变搜索框上方的背景图
     const nonce = Math.floor(Math.random() * 6+1);
     const nonce2 = (nonce < 10 ? '0' + nonce : nonce);
-    state.url = '../../../assets/image/banner/banner'+ nonce2 +'.png'
+    state.url = '../../assets/image/banner/banner'+ nonce2 +'.png'
 })
 
+// 页面状态
 const state = reactive({
     input: '',
     nonce: null,
