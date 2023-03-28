@@ -11,6 +11,7 @@ import com.zhn.teamsharebackend.exception.ErrorCode;
 import com.zhn.teamsharebackend.mapper.UserMapper;
 import com.zhn.teamsharebackend.service.EmailService;
 import com.zhn.teamsharebackend.service.RegisterService;
+import com.zhn.teamsharebackend.utils.CacheUtil;
 import com.zhn.teamsharebackend.utils.RegexUtil;
 import com.zhn.teamsharebackend.utils.ValidateUtil;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -40,6 +41,8 @@ public class RegisterServiceImpl implements RegisterService {
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private RestTemplate restTemplate;
+    @Resource
+    private CacheUtil cacheUtil;
 
     @Override
     public Result<Boolean> checkUserName(String userName) {
@@ -82,7 +85,10 @@ public class RegisterServiceImpl implements RegisterService {
         String userPassword = registerForm.registerPass;
         String code = registerForm.verificationCode;
         //对注册信息做校验
-        ValidateUtil.registerValidate(userName,email,qq,userPassword,code);
+        Result<Boolean> validateResult = ValidateUtil.registerValidate(userName, email, qq, userPassword, code);
+        if (validateResult.getData()) {
+            return validateResult;
+        }
         if(checkEmail(email).getData() || checkUserName(userName).getData()) {
             return Result.fail(ErrorCode.REGISTERED);
         }
@@ -100,7 +106,11 @@ public class RegisterServiceImpl implements RegisterService {
         //保存信息到数据库
         User user = new User(nickname, userName, userPassword, email, qq, avatarUrl);
         int i = userMapper.insert(user);
-        return Result.ok(i != 0);
+        //信息存入缓存中
+        if (i > 0) {
+            cacheUtil.set(RedisConstant.USER_KEY + user.getUserId(),user,RedisConstant.USER_TTL,TimeUnit.HOURS);
+        }
+        return Result.ok(i > 0);
     }
 
     public static String getQQAvatarUrl(String qq) {

@@ -16,37 +16,39 @@ import java.util.Date;
  * @version 1.0
  */
 public class ValidateUtil {
-    public static void registerValidate(String userName,String email,String qq,String password,String code) {
+    public static Result<Boolean> registerValidate(String userName,String email,String qq,String password,String code) {
         if(StrUtil.isAllBlank(userName,email,qq,password,code)) {
-            throw new BusinessException(ErrorCode.NULL_PARAMS_ERROR,"注册信息存在空数据");
+            return Result.fail(ErrorCode.NULL_PARAMS_ERROR, true, "注册信息存在空数据");
         }
         if(RegexUtil.isUserNameInvalid(userName)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"用户名格式不正确");
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "用户名格式不正确");
         }
         if(RegexUtil.isEmailInvalid(email)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"邮箱格式不正确");
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "邮箱格式不正确");
         }
         if(RegexUtil.isQQInvalid(qq)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"QQ号格式不正确");
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "QQ号格式不正确");
         }
         if(RegexUtil.isPasswordInvalid(password)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码格式不正确");
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "密码格式不正确");
         }
         if(RegexUtil.isCodeInvalid(code)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"验证码格式不正确");
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "验证码格式不正确");
         }
+        return Result.ok(false);
     }
 
-    public static void loginValidate(String userName,String password) {
+    public static Result<Boolean> loginValidate(String userName,String password) {
         if(StrUtil.isAllBlank(userName,password)) {
-            throw new BusinessException(ErrorCode.NULL_PARAMS_ERROR,"注册信息存在空数据");
+            return Result.fail(ErrorCode.NULL_PARAMS_ERROR, true, "注册信息存在空数据");
         }
         if(RegexUtil.isUserNameInvalid(userName)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"用户名格式不正确");
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "用户名格式不正确");
         }
         if(RegexUtil.isPasswordInvalid(password)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码格式不正确");
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "密码格式不正确");
         }
+        return Result.ok(false);
     }
 
     public static Result<Boolean> teamValidate(Team team) {

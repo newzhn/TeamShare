@@ -103,7 +103,6 @@ const submitLoginInfo = () => {
             })
             // 请求成功则关闭加载动画，清除页面数据，跳转到首页
             if(res.data.code === 200 && res.data.data) {
-                loading.close()
                 // 把token存储到浏览器
                 localStorage.setItem('authorization', res.data.data);
                 setTimeout(() => {
@@ -119,15 +118,8 @@ const submitLoginInfo = () => {
                 setTimeout(() => {
                     router.push('/home')
                 }, 3000)
-            }else{
-                //失败，或者超时都弹出错误提示框
-                loading.close()
-                ElNotification({
-                    title: '登录失败',
-                    message: res.data.message,
-                    type: 'error'
-                })
             }
+            loading.close()
         }).catch(() => {
             console.log('请求发送失败');
         })

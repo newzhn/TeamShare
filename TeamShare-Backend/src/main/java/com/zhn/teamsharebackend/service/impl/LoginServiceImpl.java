@@ -15,6 +15,7 @@ import com.zhn.teamsharebackend.exception.BusinessException;
 import com.zhn.teamsharebackend.exception.ErrorCode;
 import com.zhn.teamsharebackend.mapper.UserMapper;
 import com.zhn.teamsharebackend.service.LoginService;
+import com.zhn.teamsharebackend.service.UserService;
 import com.zhn.teamsharebackend.utils.ValidateUtil;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,10 @@ public class LoginServiceImpl implements LoginService {
         //校验用户名和密码
         String userName = loginForm.getLoginUsername();
         String password = loginForm.getLoginPassword();
-        ValidateUtil.loginValidate(userName,password);
+        Result<Boolean> validateResult = ValidateUtil.loginValidate(userName, password);
+        if (validateResult.getData()) {
+            return Result.fail(validateResult.getCode(),validateResult.getMessage(),null);
+        }
         //根据用户名查询用户
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("user_name",userName);
