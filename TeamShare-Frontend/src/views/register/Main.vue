@@ -225,8 +225,6 @@ const getCode = () => {
                             state.codeText = "重新获取";
                         }
                     },1000)
-                } else {
-                    ElMessage.error(res.data.message)
                 }
             }).catch(() => {
                 console.log('请求发送失败');
@@ -254,7 +252,6 @@ const submitAddRegisterInfo = () => {
             })
             // 请求成功则关闭加载动画，清除页面数据，跳转到登录页
             if(res.data.code === 200 && res.data.data) {
-                loading.close()
                 setTimeout(() => {
                     ElNotification({
                         title: '注册成功',
@@ -271,15 +268,8 @@ const submitAddRegisterInfo = () => {
                 setTimeout(() => {
                     window.location.href = "/login"
                 }, 3000)
-            }else{
-                //失败，或者超时都弹出错误提示框
-                loading.close()
-                ElNotification({
-                    title: '注册失败',
-                    message: res.data.message,
-                    type: 'error'
-                })
             }
+            loading.close()
         }).catch(() => {
             console.log('请求发送失败');
         })
