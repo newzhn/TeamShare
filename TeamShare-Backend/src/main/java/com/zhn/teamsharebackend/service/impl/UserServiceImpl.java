@@ -1,23 +1,16 @@
 package com.zhn.teamsharebackend.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.ObjectUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhn.teamsharebackend.constant.RedisConstant;
 import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.User;
 import com.zhn.teamsharebackend.domain.dto.UserDTO;
-import com.zhn.teamsharebackend.exception.BusinessException;
-import com.zhn.teamsharebackend.exception.ErrorCode;
 import com.zhn.teamsharebackend.mapper.UserMapper;
-import com.zhn.teamsharebackend.service.CRUDTemplate;
-import com.zhn.teamsharebackend.service.EmailService;
 import com.zhn.teamsharebackend.service.UserService;
 import com.zhn.teamsharebackend.utils.CacheUtil;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.io.Serializable;

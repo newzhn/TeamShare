@@ -1,5 +1,6 @@
 package com.zhn.teamsharebackend.exception;
 
+import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.domain.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;

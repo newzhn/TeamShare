@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.dto.LoginForm;
 import com.zhn.teamsharebackend.exception.BusinessException;
-import com.zhn.teamsharebackend.exception.ErrorCode;
+import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.service.LoginService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  * @author zhn

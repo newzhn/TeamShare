@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.dto.RegisterForm;
 import com.zhn.teamsharebackend.exception.BusinessException;
-import com.zhn.teamsharebackend.exception.ErrorCode;
+import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.service.RegisterService;
 import org.springframework.web.bind.annotation.*;
 

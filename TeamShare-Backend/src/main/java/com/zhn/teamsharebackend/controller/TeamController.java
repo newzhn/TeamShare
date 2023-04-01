@@ -7,10 +7,9 @@ import com.zhn.teamsharebackend.domain.Team;
 import com.zhn.teamsharebackend.domain.dto.TeamDTO;
 import com.zhn.teamsharebackend.domain.dto.UserDTO;
 import com.zhn.teamsharebackend.exception.BusinessException;
-import com.zhn.teamsharebackend.exception.ErrorCode;
+import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.service.TeamService;
 import com.zhn.teamsharebackend.utils.UserHolder;
-import com.zhn.teamsharebackend.utils.ValidateUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

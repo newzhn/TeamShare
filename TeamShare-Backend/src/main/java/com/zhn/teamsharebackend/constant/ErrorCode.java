@@ -1,4 +1,4 @@
-package com.zhn.teamsharebackend.exception;
+package com.zhn.teamsharebackend.constant;
 
 /**
  * The enum Error code.

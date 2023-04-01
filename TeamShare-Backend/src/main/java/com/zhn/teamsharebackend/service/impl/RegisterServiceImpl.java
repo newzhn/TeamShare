@@ -7,7 +7,7 @@ import com.zhn.teamsharebackend.constant.SystemConstant;
 import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.User;
 import com.zhn.teamsharebackend.domain.dto.RegisterForm;
-import com.zhn.teamsharebackend.exception.ErrorCode;
+import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.mapper.UserMapper;
 import com.zhn.teamsharebackend.service.EmailService;
 import com.zhn.teamsharebackend.service.RegisterService;

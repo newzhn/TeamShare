@@ -2,7 +2,7 @@ package com.zhn.teamsharebackend.interceptor;
 
 import com.google.gson.Gson;
 import com.zhn.teamsharebackend.domain.Result;
-import com.zhn.teamsharebackend.exception.ErrorCode;
+import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.utils.UserHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 

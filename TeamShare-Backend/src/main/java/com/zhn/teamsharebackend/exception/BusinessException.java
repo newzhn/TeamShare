@@ -1,5 +1,7 @@
 package com.zhn.teamsharebackend.exception;
 
+import com.zhn.teamsharebackend.constant.ErrorCode;
+
 /**
  * 自定义业务异常
  *

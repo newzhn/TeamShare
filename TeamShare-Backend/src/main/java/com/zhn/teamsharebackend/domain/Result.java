@@ -1,6 +1,6 @@
 package com.zhn.teamsharebackend.domain;
 
-import com.zhn.teamsharebackend.exception.ErrorCode;
+import com.zhn.teamsharebackend.constant.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

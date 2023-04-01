@@ -4,6 +4,7 @@ import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.zhn.teamsharebackend.constant.CacheConstant;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.lang.reflect.Type;
@@ -41,6 +42,19 @@ public class CacheUtil {
     }
 
     /**
+     * 以json字符串形式向Redis存储数据
+     * @param constant 缓存常量
+     * @param id
+     * @param value value值
+     */
+    public <ID> void set(CacheConstant constant,ID id,Object value) {
+        String key = constant.getKeyPrefix() + id;
+        Long time = constant.getTtl();
+        TimeUnit unit = constant.getUnit();
+        stringRedisTemplate.opsForValue().set(key, gson.toJson(value),time,unit);
+    }
+
+    /**
      * 读取Redis数据
      * @param key key值
      * @return 返回值
@@ -51,6 +65,15 @@ public class CacheUtil {
             return null;
         }
         return gson.fromJson(json, type);
+    }
+
+    /**
+     * 读取Redis数据
+     * @param key key值
+     * @return 返回值
+     */
+    public Object get(String key) {
+        return stringRedisTemplate.opsForValue().get(key);
     }
 
     /**
@@ -70,6 +93,25 @@ public class CacheUtil {
      * @param unit 时间单位
      */
     public void setWithLogicalExpire(String key, Object value, Long time, TimeUnit unit) {
+        //设置逻辑过期时间
+        RedisData redisData = new RedisData();
+        redisData.setData(value);
+        redisData.setExpireTime(LocalDateTime.now().plusSeconds(unit.toSeconds(time)));
+        //写入缓存
+        stringRedisTemplate.opsForValue().set(key, gson.toJson(redisData));
+    }
+
+    /**
+     * 以字符串形式向Redis存储数据，不再由Redis控制过期时间，而是通过设置逻辑时间进行管理
+     * @param constant
+     * @param id
+     * @param value
+     * @param <ID>
+     */
+    public <ID> void setWithLogicalExpire(CacheConstant constant,ID id,Object value) {
+        String key = constant.getKeyPrefix() + id;
+        Long time = constant.getTtl();
+        TimeUnit unit = constant.getUnit();
         //设置逻辑过期时间
         RedisData redisData = new RedisData();
         redisData.setData(value);
@@ -99,17 +141,18 @@ public class CacheUtil {
 
     /**
      * 解决缓存穿透方案的默认实现
-     * @param keyPrefix key前缀
-     * @param id key后缀
-     * @param type 存入Redis的数据结构类型
-     * @param dbFallBack 传入一段函数，可以执行
-     * @param time 过期时间
-     * @param unit 时间单位
-     * @param <R> 返回数据类型
-     * @param <ID> key后缀类型
-     * @return 返回处理结果
+     * @param constant
+     * @param id
+     * @param type
+     * @param dbFallBack
+     * @param <R>
+     * @param <ID>
+     * @return
      */
-    public <R,ID> R queryWithPassThrough(String keyPrefix, ID id, Class<R> type, Function<ID,R> dbFallBack,Long time, TimeUnit unit){
+    public <R,ID> R queryWithPassThrough(CacheConstant constant,ID id, Class<R> type, Function<ID,R> dbFallBack){
+        String keyPrefix = constant.getKeyPrefix();
+        Long time = constant.getTtl();
+        TimeUnit unit = constant.getUnit();
         return queryWithPassThrough(keyPrefix,id,type,dbFallBack,time,unit,2L);
     }
 
@@ -126,8 +169,7 @@ public class CacheUtil {
      * @param <ID> key后缀类型
      * @return 返回处理结果
      */
-    public <R,ID> R queryWithPassThrough(
-            String keyPrefix, ID id, Class<R> type, Function<ID,R> dbFallBack,Long time, TimeUnit unit, Long nullTimeMinutes) {
+    public <R,ID> R queryWithPassThrough(String keyPrefix, ID id, Class<R> type, Function<ID,R> dbFallBack,Long time, TimeUnit unit, Long nullTimeMinutes) {
         String key = keyPrefix + id;
         //1. 从Redis缓存中获取信息
         String json = stringRedisTemplate.opsForValue().get(key);

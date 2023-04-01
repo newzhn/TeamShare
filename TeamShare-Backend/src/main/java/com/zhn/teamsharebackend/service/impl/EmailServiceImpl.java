@@ -1,7 +1,7 @@
 package com.zhn.teamsharebackend.service.impl;
 
 import com.zhn.teamsharebackend.exception.BusinessException;
-import com.zhn.teamsharebackend.exception.ErrorCode;
+import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
