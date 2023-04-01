@@ -2,7 +2,7 @@ package com.zhn.teamsharebackend.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.zhn.teamsharebackend.domain.Result;
-import com.zhn.teamsharebackend.domain.dto.RegisterForm;
+import com.zhn.teamsharebackend.domain.request.RegisterRequest;
 import com.zhn.teamsharebackend.exception.BusinessException;
 import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.service.RegisterService;
@@ -20,11 +20,11 @@ public class RegisterController {
     private RegisterService registerService;
 
     @PostMapping("/register")
-    public Result<Boolean> register(@RequestBody RegisterForm registerForm) {
-        if(registerForm == null) {
+    public Result<Boolean> register(@RequestBody RegisterRequest registerRequest) {
+        if(registerRequest == null) {
             throw new BusinessException(ErrorCode.NULL_PARAMS_ERROR,"注册信息为空");
         }
-        return registerService.register(registerForm);
+        return registerService.register(registerRequest);
     }
 
     @GetMapping("/register/sendCode")

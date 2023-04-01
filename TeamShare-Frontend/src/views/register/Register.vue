@@ -229,6 +229,7 @@ const getCode = () => {
             }).catch(() => {
                 console.log('请求发送失败');
             })
+            state.show = false
         } else {
             ElMessage.error('按要求填写电子邮箱后再获取验证码.')
             return false;

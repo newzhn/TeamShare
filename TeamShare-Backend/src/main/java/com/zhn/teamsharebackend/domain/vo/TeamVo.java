@@ -1,4 +1,4 @@
-package com.zhn.teamsharebackend.domain.dto;
+package com.zhn.teamsharebackend.domain.vo;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @version 1.0
  */
 @Data
-public class TeamDTO {
+public class TeamVo {
     /**
      * 队伍ID
      */
@@ -32,24 +32,9 @@ public class TeamDTO {
     private Integer teamSize;
 
     /**
-     * 队员id集合
-     */
-    private List<Long> memberIds;
-
-    /**
-     * 队长id
-     */
-    private Long captainId;
-
-    /**
      * 队伍状态。。。
      */
     private Integer teamStatus;
-
-    /**
-     * 队伍密码，只有在队伍加密状态下有值
-     */
-    private String teamPassword;
 
     /**
      * 队伍截止时间
@@ -62,22 +47,12 @@ public class TeamDTO {
     private Date createTime;
 
     /**
-     * 修改时间
-     */
-    private Date updateTime;
-
-    /**
-     * 是否删除，0是未删除，1是已删除
-     */
-    private Integer isDelete;
-
-    /**
      * 队长信息
      */
-    private UserDTO captain;
+    private UserVo captain;
 
     /**
      * 队员信息
      */
-    private List<UserDTO> members;
+    private List<UserVo> members;
 }

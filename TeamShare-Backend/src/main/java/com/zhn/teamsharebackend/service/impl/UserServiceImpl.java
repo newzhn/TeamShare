@@ -2,10 +2,12 @@ package com.zhn.teamsharebackend.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhn.teamsharebackend.constant.RedisConstant;
+import com.zhn.teamsharebackend.constant.CacheConstant;
+import com.zhn.teamsharebackend.converter.UserConverter;
 import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.User;
 import com.zhn.teamsharebackend.domain.dto.UserDTO;
+import com.zhn.teamsharebackend.domain.vo.UserVo;
 import com.zhn.teamsharebackend.mapper.UserMapper;
 import com.zhn.teamsharebackend.service.UserService;
 import com.zhn.teamsharebackend.utils.CacheUtil;
@@ -31,6 +33,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private CacheUtil cacheUtil;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+    @Resource
+    private UserConverter userConverter;
 
     @Override
     public Result<Boolean> create(User user) {
@@ -48,15 +52,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public Result<UserDTO> get(long userId) {
+    public Result<UserVo> get(long userId) {
         User user = this.getById(userId);
         return Result.ok(user == null ? null : this.convert(user));
     }
 
     @Override
-    public UserDTO convert(User user) {
+    public UserVo convert(User user) {
         //暂时只是属性复制，，后续增加属性处理相关操作 TODO
-        return BeanUtil.copyProperties(user,UserDTO.class);
+        UserDTO userDTO = userConverter.doToDto(user);
+        return userConverter.dtoToVo(userDTO);
     }
 
     /**
@@ -66,19 +71,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      */
     @Override
     public User getById(Serializable id) {
-        return cacheUtil.queryWithPassThrough(RedisConstant.USER_KEY, id, User.class, super::getById,
-                RedisConstant.USER_TTL, TimeUnit.HOURS, RedisConstant.NULL_DATA_TTL);
+        return cacheUtil.queryWithPassThrough(CacheConstant.USER, id, User.class, super::getById);
     }
 
     @Override
-    public Result<UserDTO> getLoginUser(String token) {
-        String key = RedisConstant.LOGIN_USER_KEY + token;
+    public Result<UserVo> getLoginUser(String token) {
+        String key = CacheConstant.LOGIN_USER.getKeyPrefix() + token;
         Map<Object, Object> userMap = stringRedisTemplate.opsForHash().entries(key);
         if (userMap.isEmpty()) {
             return Result.ok();
         }
         UserDTO userDTO = BeanUtil.fillBeanWithMap(userMap, new UserDTO(), false);
-        return Result.ok(userDTO);
+        return Result.ok(userConverter.dtoToVo(userDTO));
     }
 }
 

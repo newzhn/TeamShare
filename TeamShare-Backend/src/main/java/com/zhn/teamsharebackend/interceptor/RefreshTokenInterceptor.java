@@ -2,7 +2,7 @@ package com.zhn.teamsharebackend.interceptor;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
-import com.zhn.teamsharebackend.constant.RedisConstant;
+import com.zhn.teamsharebackend.constant.CacheConstant;
 import com.zhn.teamsharebackend.domain.dto.UserDTO;
 import com.zhn.teamsharebackend.utils.UserHolder;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static com.zhn.teamsharebackend.constant.CacheConstant.LOGIN_USER;
 
 /**
  * @author zhn
@@ -33,13 +35,13 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
             return true;
         }
         //从Redis中获取用户信息,判断用户信息是否有效
-        String key = RedisConstant.LOGIN_USER_KEY + token;
+        String key = LOGIN_USER.getKeyPrefix() + token;
         Map<Object, Object> userMap = stringRedisTemplate.opsForHash().entries(key);
         if (userMap.isEmpty()) {
             return true;
         }
         //刷新用户信息持续时间
-        stringRedisTemplate.expire(key,RedisConstant.LOGIN_USER_TTL, TimeUnit.MINUTES);
+        stringRedisTemplate.expire(key, LOGIN_USER.getTtl(), LOGIN_USER.getUnit());
         //存入Holder
         UserDTO userDTO = BeanUtil.fillBeanWithMap(userMap, new UserDTO(), false);
         UserHolder.saveUser(userDTO);

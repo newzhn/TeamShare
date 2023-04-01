@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.zhn.teamsharebackend.constant.CacheConstant;
+import net.bytebuddy.utility.dispatcher.JavaDispatcher;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.lang.reflect.Type;
@@ -38,7 +39,8 @@ public class CacheUtil {
      * @param unit 时间单位
      */
     public void set(String key, Object value, Long time, TimeUnit unit) {
-        stringRedisTemplate.opsForValue().set(key, gson.toJson(value),time,unit);
+        String json = value.getClass() != String.class ? gson.toJson(value) : (String) value;
+        stringRedisTemplate.opsForValue().set(key, json,time,unit);
     }
 
     /**
@@ -51,7 +53,8 @@ public class CacheUtil {
         String key = constant.getKeyPrefix() + id;
         Long time = constant.getTtl();
         TimeUnit unit = constant.getUnit();
-        stringRedisTemplate.opsForValue().set(key, gson.toJson(value),time,unit);
+        String json = value.getClass() != String.class ? gson.toJson(value) : (String) value;
+        stringRedisTemplate.opsForValue().set(key, json,time,unit);
     }
 
     /**
@@ -72,7 +75,8 @@ public class CacheUtil {
      * @param key key值
      * @return 返回值
      */
-    public Object get(String key) {
+    public String get(String key) {
+        String s = stringRedisTemplate.opsForValue().get(key);
         return stringRedisTemplate.opsForValue().get(key);
     }
 

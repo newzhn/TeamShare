@@ -1,4 +1,4 @@
-package com.zhn.teamsharebackend.domain.dto;
+package com.zhn.teamsharebackend.domain.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserVo {
     /**
      * 用户ID
      */
@@ -31,11 +31,6 @@ public class UserDTO {
     private String userName;
 
     /**
-     * 密码
-     */
-    private String userPassword;
-
-    /**
      * 头像url
      */
     private String avatarUrl;
@@ -48,7 +43,7 @@ public class UserDTO {
     /**
      * 性别，0为女，1为男
      */
-    private Integer gender;
+    private String gender;
 
     /**
      * 邮箱
@@ -66,16 +61,6 @@ public class UserDTO {
     private List<String> tagNames;
 
     /**
-     * json格式保存的队伍名列表
-     */
-    private List<Long> teamIds;
-
-    /**
-     * 用户状态，0是正常，1是被拉黑等
-     */
-    private Integer userStatus;
-
-    /**
      * 用户角色，0是管理员，1是普通用户，2是队长，3是组员等
      */
     private Integer userRole;
@@ -84,19 +69,4 @@ public class UserDTO {
      * 注册时间
      */
     private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    private Date updateTime;
-
-    /**
-     * 是否删除，0是未删除，1是已删除
-     */
-    private Integer isDelete;
-
-    /**
-     * token
-     */
-    private String token;
 }

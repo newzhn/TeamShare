@@ -2,8 +2,7 @@ package com.zhn.teamsharebackend.service;
 
 import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.Team;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhn.teamsharebackend.domain.dto.TeamDTO;
+import com.zhn.teamsharebackend.domain.vo.TeamVo;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
  * @description 针对表【team(队伍表)】的数据库操作Service
  * @createDate 2023-03-04 15:58:14
  */
-public interface TeamService extends CRUDTemplate<Team,TeamDTO> {
+public interface TeamService extends CRUDTemplate<Team, TeamVo> {
     /**
      * 加入队伍
      *
@@ -30,15 +29,15 @@ public interface TeamService extends CRUDTemplate<Team,TeamDTO> {
      * @param teamStatus 前端传入队伍状态参数
      * @return 返回队伍列表
      */
-    Result<List<TeamDTO>> getListForStatus(int teamStatus);
+    Result<List<TeamVo>> getListForStatus(int teamStatus);
 
     /**
      * 获取当前登录用户加入的队伍列表
      *
-     * @param teamIdsStr json格式的队伍id列表，一般存储在用户信息里
+     * @param teamIds 队伍id列表，一般存储在用户信息里
      * @return 返回队伍列表
      */
-    Result<List<TeamDTO>> getJoinedList(String teamIdsStr);
+    Result<List<TeamVo>> getJoinedList(List<Long> teamIds);
 
     /**
      * 队伍名去重校验
@@ -54,5 +53,7 @@ public interface TeamService extends CRUDTemplate<Team,TeamDTO> {
      * @param teamStatus
      * @return
      */
-    Result<List<TeamDTO>> search(String searchText, int teamStatus);
+    Result<List<TeamVo>> search(String searchText, int teamStatus);
+
+    void changeMemberIds(List<Long> memberIds,Long teamId);
 }

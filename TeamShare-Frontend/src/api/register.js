@@ -40,10 +40,10 @@ export function userRegister(registerForm) {
         url:'register',
         method:'Post',
         data:{
-            registerName:registerForm.registerName,
-            registerEmail:registerForm.registerEmail,
-            registerQQ:registerForm.registerQQ,
-            registerPass:registerForm.registerPass,
+            userName:registerForm.registerName,
+            email:registerForm.registerEmail,
+            qq:registerForm.registerQQ,
+            userPassword:registerForm.registerPass,
             verificationCode:registerForm.verificationCode
         }
     })

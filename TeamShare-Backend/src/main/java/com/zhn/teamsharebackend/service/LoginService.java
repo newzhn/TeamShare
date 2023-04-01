@@ -1,9 +1,9 @@
 package com.zhn.teamsharebackend.service;
 
 import com.zhn.teamsharebackend.domain.Result;
-import com.zhn.teamsharebackend.domain.dto.LoginForm;
+import com.zhn.teamsharebackend.domain.request.LoginRequest;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author zhn
@@ -11,7 +11,9 @@ import java.util.Map;
  */
 public interface LoginService {
 
-    Result<String> login(LoginForm loginForm);
+    Result<String> login(LoginRequest loginRequest);
 
     Result<Boolean> logout(String token);
+
+    void changeTeamIds(List<Long> teamIds,Long userId, String token);
 }

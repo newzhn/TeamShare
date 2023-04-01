@@ -1,4 +1,4 @@
-package com.zhn.teamsharebackend.domain.dto;
+package com.zhn.teamsharebackend.domain.request;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class LoginForm {
+public class LoginRequest {
     private String loginUsername;
     private String loginPassword;
 }

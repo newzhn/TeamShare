@@ -156,11 +156,12 @@ const onClick = () => {
             ElMessage.success("成功创建你自己的队伍")
             drawerRef.value.close()
             // 刷新数据
+            teamStore.changeJoinFlag()
+            // 清除表单数据
+            clearForm()
             if(props.teamTab === form.teamStatus){
                 getData(form.teamStatus)
             }
-            // 清除表单数据
-            clearForm()
         }
     }).catch(() => {
         console.log('请求发送失败');
@@ -240,6 +241,13 @@ const getData = (teamTab) => {
         console.log('请求发送失败');
     })
 }
+
+// 刷新页面数据
+const refreshData = (teamTab) => {
+    teamStore.changeJoinFlag()
+    getData(teamTab)
+}
+
 const changeDialogVisible = (teamStatus,teamId) => {
     state.teamId = teamId
     if(teamStatus === 1) {
@@ -262,8 +270,7 @@ const joinInOnclick = () => {
             state.privateDialogVisible = false
             ElMessage.success("加入队伍成功")
             // 刷新页面数据
-            teamStore.changeJoinFlag()
-            getData(teamStore.teamTab)
+            refreshData(teamStore.teamTab)
         }
     }).catch(() => {
         console.log('请求发送失败');

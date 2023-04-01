@@ -1,7 +1,7 @@
 package com.zhn.teamsharebackend.service;
 
 import com.zhn.teamsharebackend.domain.Result;
-import com.zhn.teamsharebackend.domain.dto.RegisterForm;
+import com.zhn.teamsharebackend.domain.request.RegisterRequest;
 
 /**
  * The interface Register service.
@@ -41,8 +41,8 @@ public interface RegisterService {
      * Register result.
      * 用户注册
      *
-     * @param registerForm the register form
+     * @param registerRequest the register form
      * @return the result
      */
-    Result<Boolean> register(RegisterForm registerForm);
+    Result<Boolean> register(RegisterRequest registerRequest);
 }

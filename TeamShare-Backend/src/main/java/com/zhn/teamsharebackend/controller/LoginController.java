@@ -2,7 +2,7 @@ package com.zhn.teamsharebackend.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.zhn.teamsharebackend.domain.Result;
-import com.zhn.teamsharebackend.domain.dto.LoginForm;
+import com.zhn.teamsharebackend.domain.request.LoginRequest;
 import com.zhn.teamsharebackend.exception.BusinessException;
 import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.service.LoginService;
@@ -24,11 +24,11 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
-    public Result<String> login(@RequestBody LoginForm loginForm) {
-        if(loginForm == null) {
+    public Result<String> login(@RequestBody LoginRequest loginRequest) {
+        if(loginRequest == null) {
             throw new BusinessException(ErrorCode.NULL_PARAMS_ERROR,"登录信息为空");
         }
-        return loginService.login(loginForm);
+        return loginService.login(loginRequest);
     }
 
     @GetMapping("/logout")

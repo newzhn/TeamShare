@@ -6,6 +6,7 @@ import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.Team;
 import com.zhn.teamsharebackend.domain.dto.TeamDTO;
 import com.zhn.teamsharebackend.domain.dto.UserDTO;
+import com.zhn.teamsharebackend.domain.vo.TeamVo;
 import com.zhn.teamsharebackend.exception.BusinessException;
 import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.service.TeamService;
@@ -48,7 +49,7 @@ public class TeamController {
     }
 
     @GetMapping("/{teamId}")
-    public Result<TeamDTO> get(@PathVariable("teamId") Long teamId) {
+    public Result<TeamVo> get(@PathVariable("teamId") Long teamId) {
         if (teamId != null && teamId <= 0) {
             return Result.fail(ErrorCode.PARAMS_ERROR,"队伍Id参数错误");
         }
@@ -65,7 +66,7 @@ public class TeamController {
     }
 
     @GetMapping("/getList/{teamStatus}")
-    public Result<List<TeamDTO>> getList(@PathVariable("teamStatus") int teamStatus) {
+    public Result<List<TeamVo>> getList(@PathVariable("teamStatus") int teamStatus) {
         if(teamStatus != 1 && teamStatus != 2) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"队伍状态参数错误");
         }
@@ -73,7 +74,7 @@ public class TeamController {
     }
 
     @GetMapping("/getJoinedList")
-    public Result<List<TeamDTO>> getJoinedList() {
+    public Result<List<TeamVo>> getJoinedList() {
         //校验用户是否登录
         UserDTO user = UserHolder.getUser();
         if (ObjectUtil.isEmpty(user)) {
@@ -91,9 +92,9 @@ public class TeamController {
     }
 
     @GetMapping("/search")
-    public Result<List<TeamDTO>> search(String searchText,int teamStatus) {
+    public Result<List<TeamVo>> search(String searchText,int teamStatus) {
         if (StrUtil.isBlank(searchText)) {
-            return teamService.getListForStatus(teamStatus);
+            return this.getList(teamStatus);
         }
         if(teamStatus != 1 && teamStatus != 2) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"队伍状态参数错误");
