@@ -1,6 +1,8 @@
 package com.zhn.teamsharebackend.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.User;
 import com.zhn.teamsharebackend.domain.dto.UserDTO;
@@ -22,6 +24,15 @@ import java.util.List;
 public class UserController {
     @Resource
     private UserService userService;
+
+    @PutMapping("/")
+    public Result<Boolean> update(@RequestBody UserVo userVo) {
+        //校验
+        if (ObjectUtil.isEmpty(userVo)) {
+            return Result.fail(ErrorCode.NULL_PARAMS_ERROR,"表单内容不允许为空");
+        }
+        return userService.updateUser(userVo,UserHolder.getUser().getToken());
+    }
 
     @GetMapping("/getLoginUser")
     public Result<UserVo> getLoginUser(HttpServletRequest request) {

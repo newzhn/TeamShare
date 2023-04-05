@@ -13,4 +13,6 @@ import com.zhn.teamsharebackend.domain.vo.UserVo;
 public interface UserService extends CRUDTemplate<User, UserVo> {
 
     Result<UserVo> getLoginUser(String token);
+
+    Result<Boolean> updateUser(UserVo userVo,String token);
 }

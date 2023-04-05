@@ -1,6 +1,6 @@
 <!-- 回到顶部固钉 -->
 <template>
-    <el-backtop :bottom="100" visibility-height="100" class="backtop_box">
+    <el-backtop :bottom="100" :visibility-height="100" class="backtop_box">
         <el-icon :size="20">
             <CaretTop />
         </el-icon>

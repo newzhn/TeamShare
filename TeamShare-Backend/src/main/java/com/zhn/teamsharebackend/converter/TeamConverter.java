@@ -39,4 +39,14 @@ public class TeamConverter implements Converter<Team, TeamDTO, TeamVo> {
         teamVo.setMembers(userConverter.dtoToVoList(teamDTO.getMembers()));
         return teamVo;
     }
+
+    @Override
+    public TeamDTO voToDto(TeamVo teamVo) {
+        return null;
+    }
+
+    @Override
+    public Team dtoToDo(TeamDTO teamDTO) {
+        return null;
+    }
 }

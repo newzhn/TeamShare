@@ -11,18 +11,18 @@
         <el-menu-item index="/community" @click="closeDrawer">
             <span>社区</span>
         </el-menu-item>
-        <el-menu-item index="/info" @click="closeDrawer">
+        <el-menu-item index="/info" v-show="userStore.isLogin()" @click="closeDrawer">
             <span>个人</span>
         </el-menu-item>
         <!-- 根据登录态进行不同样式展示 -->
-        <el-menu-item index="/login" v-show="!userInfo" @click="closeDrawer">
+        <el-menu-item index="/login" v-show="!userStore.isLogin()" @click="closeDrawer">
             <span>登录/注册</span>
         </el-menu-item>
-        <el-menu-item index="/backstageHome" v-show="userInfo" @click="closeDrawer">
+        <el-menu-item index="/backstageHome" v-show="userStore.isLogin()" @click="closeDrawer">
             <span>进入后台</span>
         </el-menu-item>
-        <el-menu-item index="/logout" v-show="userInfo" @click="logout">
-            <span>退出登录</span>
+        <el-menu-item v-show="userStore.isLogin()" >
+            <el-link type="danger" :underline="false" @click="logout()">退出登录</el-link>
         </el-menu-item>
     </el-menu>
 </template>
@@ -68,12 +68,13 @@
                 }).catch(() => {
                     console.log('请求发送失败');
                 })
-                
             }
             return {
                 route,
                 closeDrawer,
-                logout
+                logout,
+                userInfo,
+                userStore
             }
         }
     }

@@ -7,7 +7,7 @@
         <el-menu-item class="hidden-xs-only" index="/home">首页</el-menu-item>
         <el-menu-item class="hidden-xs-only" index="/team">组队</el-menu-item>
         <el-menu-item class="hidden-xs-only" index="/community">社区</el-menu-item>
-        <el-menu-item class="hidden-xs-only" index="/info">个人</el-menu-item>
+        <el-menu-item class="hidden-xs-only" index="/info" v-if="userStore.isLogin()">个人</el-menu-item>
         <!-- 根据用户登录态决定展示样式 -->
         <router-link v-if="!userStore.isLogin()" to="/login" class="loginA hidden-xs-only">登录/注册</router-link>
         <el-dropdown class="hidden-xs-only" v-if="userStore.isLogin()">

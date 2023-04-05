@@ -2,6 +2,7 @@ package com.zhn.teamsharebackend.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.gson.Gson;
 import com.zhn.teamsharebackend.constant.CacheConstant;
 import com.zhn.teamsharebackend.converter.UserConverter;
 import com.zhn.teamsharebackend.domain.Result;
@@ -11,11 +12,14 @@ import com.zhn.teamsharebackend.domain.vo.UserVo;
 import com.zhn.teamsharebackend.mapper.UserMapper;
 import com.zhn.teamsharebackend.service.UserService;
 import com.zhn.teamsharebackend.utils.CacheUtil;
+import com.zhn.teamsharebackend.utils.ValidateUtil;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +39,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private UserConverter userConverter;
+    @Resource
+    private Gson gson;
 
     @Override
     public Result<Boolean> create(User user) {
@@ -83,6 +89,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         UserDTO userDTO = BeanUtil.fillBeanWithMap(userMap, new UserDTO(), false);
         return Result.ok(userConverter.dtoToVo(userDTO));
+    }
+
+    @Override
+    public Result<Boolean> updateUser(UserVo userVo,String token) {
+        UserDTO userDTO = userConverter.voToDto(userVo);
+        //校验
+        Result<Boolean> validate = ValidateUtil.userValidate(userDTO);
+        if (validate.getData()) {
+            return validate;
+        }
+        //修改数据
+        this.updateCacheUser(userDTO,token);
+        User user = userConverter.dtoToDo(userDTO);
+        cacheUtil.delete(CacheConstant.USER.getKeyPrefix() + user.getUserId());
+        this.updateById(user);
+        return Result.ok(true);
+    }
+
+    private void updateCacheUser(UserDTO userDTO,String token) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("nickname",gson.toJson(userDTO.getNickname()));
+        map.put("signature",gson.toJson(userDTO.getSignature()));
+        map.put("gender",gson.toJson(userDTO.getGender()));
+        map.put("email",gson.toJson(userDTO.getEmail()));
+        map.put("qq",gson.toJson(userDTO.getQq()));
+        map.put("tagNames",gson.toJson(userDTO.getTagNames()));
+        stringRedisTemplate.opsForHash().putAll(CacheConstant.LOGIN_USER.getKeyPrefix() + token,map);
     }
 }
 
