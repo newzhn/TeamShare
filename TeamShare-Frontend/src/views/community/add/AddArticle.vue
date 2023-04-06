@@ -17,9 +17,9 @@
                 </div>
             </el-form-item>
             <!-- 分类 -->
-            <el-form-item label="分类：" prop="categary">
-                <el-select v-model="form.categary" placeholder="文章所属分类" style="width: 100%;">
-                    <el-option v-for="item in state.categaryOptions" :key="item.value" :label="item.label"
+            <el-form-item label="分类：" prop="category">
+                <el-select v-model="form.category" placeholder="文章所属分类" style="width: 100%;">
+                    <el-option v-for="item in state.categoryOptions" :key="item.value" :label="item.label"
                         :value="item.value" />
                 </el-select>
             </el-form-item>
@@ -62,7 +62,7 @@ const editorConfig = { placeholder: '请输入文章内容...' }
 const form = reactive({
     title: '',
     content: '',
-    categary: '',
+    category: '',
     tags: []
 })
 // 表单校验规则
@@ -71,7 +71,7 @@ const rules = reactive({
         { required: true, message: '文章标题不能为空哦', trigger: 'blur' },
         { min: 5, max: 20, message: '标题长度必须要在5-20字符之间', trigger: 'blur' },
     ],
-    categary: [
+    category: [
         {
             required: true,
             message: '文章标签不能为空哦',
@@ -88,7 +88,7 @@ const rules = reactive({
 })
 // 页面状态
 const state = reactive({
-    categaryOptions: [
+    categoryOptions: [
         {
             value: 'Option1',
             label: 'Option1',
