@@ -12,6 +12,7 @@
             <result property="readingVolume" column="reading_volume" jdbcType="INTEGER"/>
             <result property="likes" column="likes" jdbcType="VARCHAR"/>
             <result property="authorId" column="author_id" jdbcType="BIGINT"/>
+            <result property="tagIds" column="tag_ids" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
@@ -19,7 +20,7 @@
 
     <sql id="Base_Column_List">
         article_id,title,content,article_status,
-        reading_volume,likes,author_id,
+        reading_volume,likes,author_id,tag_ids
         create_time,update_time,is_delete
     </sql>
 </mapper>
