@@ -11,13 +11,22 @@
 
 <script setup>
 import { reactive } from 'vue';
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user.js'
+import { ElMessage } from 'element-plus';
 
+const router = useRouter()
+const store = useUserStore()
 const state = reactive({
     searchInput:''
 })
 
 const putArticleOnclick = () => {
-
+    if(!store.isLogin()) {
+        ElMessage.error('用户登录后才可以发布文章')
+        return
+    }
+    router.push('/community/add')
 }
 </script>
 

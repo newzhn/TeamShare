@@ -39,6 +39,12 @@ const routes = [
         meta: { title: '社区 - 每天都是不一样' },
       },
       {
+        name:'addArticle',
+        path:'/community/add',
+        component:() => import('@/views/community/add/AddArticle.vue'),
+        meta: { title: '发布文章 - 每天都是不一样' },
+      },
+      {
         name:'info',
         path:'/info',
         component:() => import('@/views/info/Info.vue'),
