@@ -1,7 +1,7 @@
 package com.zhn.teamsharebackend.mapper;
 
-import com.zhn.teamsharebackend.domain.Tag;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zhn.teamsharebackend.domain.Tag;
 
 /**
 * @author zhanh

@@ -37,16 +37,6 @@ public class Article implements Serializable {
     private String outline;
 
     /**
-     * 文章配图
-     */
-    private String articlePictures;
-
-    /**
-     * 文章状态，0是草稿，1是已发布，2是精选等
-     */
-    private Integer articleStatus;
-
-    /**
      * 文章阅读量
      */
     private Integer readingVolume;
@@ -59,7 +49,7 @@ public class Article implements Serializable {
     /**
      * 作者ID
      */
-    private Long userId;
+    private Long authorId;
 
     /**
      * 发布时间
@@ -95,11 +85,9 @@ public class Article implements Serializable {
             && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
             && (this.getOutline() == null ? other.getOutline() == null : this.getOutline().equals(other.getOutline()))
-            && (this.getArticlePictures() == null ? other.getArticlePictures() == null : this.getArticlePictures().equals(other.getArticlePictures()))
-            && (this.getArticleStatus() == null ? other.getArticleStatus() == null : this.getArticleStatus().equals(other.getArticleStatus()))
             && (this.getReadingVolume() == null ? other.getReadingVolume() == null : this.getReadingVolume().equals(other.getReadingVolume()))
             && (this.getLikes() == null ? other.getLikes() == null : this.getLikes().equals(other.getLikes()))
-            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
+            && (this.getAuthorId() == null ? other.getAuthorId() == null : this.getAuthorId().equals(other.getAuthorId()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()));
@@ -113,11 +101,9 @@ public class Article implements Serializable {
         result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         result = prime * result + ((getOutline() == null) ? 0 : getOutline().hashCode());
-        result = prime * result + ((getArticlePictures() == null) ? 0 : getArticlePictures().hashCode());
-        result = prime * result + ((getArticleStatus() == null) ? 0 : getArticleStatus().hashCode());
         result = prime * result + ((getReadingVolume() == null) ? 0 : getReadingVolume().hashCode());
         result = prime * result + ((getLikes() == null) ? 0 : getLikes().hashCode());
-        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
+        result = prime * result + ((getAuthorId() == null) ? 0 : getAuthorId().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
@@ -134,11 +120,9 @@ public class Article implements Serializable {
         sb.append(", title=").append(title);
         sb.append(", content=").append(content);
         sb.append(", outline=").append(outline);
-        sb.append(", articlePictures=").append(articlePictures);
-        sb.append(", articleStatus=").append(articleStatus);
         sb.append(", readingVolume=").append(readingVolume);
         sb.append(", likes=").append(likes);
-        sb.append(", userId=").append(userId);
+        sb.append(", userId=").append(authorId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", isDelete=").append(isDelete);
