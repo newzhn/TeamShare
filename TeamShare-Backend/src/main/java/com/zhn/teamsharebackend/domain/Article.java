@@ -32,9 +32,9 @@ public class Article implements Serializable {
     private String content;
 
     /**
-     * 文章简介
+     * 文章状态，0是草稿，1是已发布，2是精选等
      */
-    private String outline;
+    private Integer articleStatus;
 
     /**
      * 文章阅读量
@@ -84,7 +84,7 @@ public class Article implements Serializable {
         return (this.getArticleId() == null ? other.getArticleId() == null : this.getArticleId().equals(other.getArticleId()))
             && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
-            && (this.getOutline() == null ? other.getOutline() == null : this.getOutline().equals(other.getOutline()))
+            && (this.getArticleStatus() == null ? other.getArticleStatus() == null : this.getArticleStatus().equals(other.getArticleStatus()))
             && (this.getReadingVolume() == null ? other.getReadingVolume() == null : this.getReadingVolume().equals(other.getReadingVolume()))
             && (this.getLikes() == null ? other.getLikes() == null : this.getLikes().equals(other.getLikes()))
             && (this.getAuthorId() == null ? other.getAuthorId() == null : this.getAuthorId().equals(other.getAuthorId()))
@@ -100,7 +100,7 @@ public class Article implements Serializable {
         result = prime * result + ((getArticleId() == null) ? 0 : getArticleId().hashCode());
         result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
-        result = prime * result + ((getOutline() == null) ? 0 : getOutline().hashCode());
+        result = prime * result + ((getArticleStatus() == null) ? 0 : getArticleStatus().hashCode());
         result = prime * result + ((getReadingVolume() == null) ? 0 : getReadingVolume().hashCode());
         result = prime * result + ((getLikes() == null) ? 0 : getLikes().hashCode());
         result = prime * result + ((getAuthorId() == null) ? 0 : getAuthorId().hashCode());
@@ -119,7 +119,7 @@ public class Article implements Serializable {
         sb.append(", articleId=").append(articleId);
         sb.append(", title=").append(title);
         sb.append(", content=").append(content);
-        sb.append(", outline=").append(outline);
+        sb.append(", articleStatus=").append(articleStatus);
         sb.append(", readingVolume=").append(readingVolume);
         sb.append(", likes=").append(likes);
         sb.append(", userId=").append(authorId);

@@ -8,7 +8,7 @@
             <id property="articleId" column="article_id" jdbcType="BIGINT"/>
             <result property="title" column="title" jdbcType="VARCHAR"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="outline" column="outline" jdbcType="VARCHAR"/>
+            <result property="articleStatus" column="article_status" jdbcType="INTEGER"/>
             <result property="readingVolume" column="reading_volume" jdbcType="INTEGER"/>
             <result property="likes" column="likes" jdbcType="VARCHAR"/>
             <result property="authorId" column="author_id" jdbcType="BIGINT"/>
