@@ -1,6 +1,7 @@
 package com.zhn.teamsharebackend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhn.teamsharebackend.domain.Tag;
 
 /**
 * @author zhanh
