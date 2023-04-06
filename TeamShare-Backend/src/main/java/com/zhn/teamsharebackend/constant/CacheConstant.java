@@ -16,7 +16,11 @@ public enum CacheConstant {
     REGISTER_CODE("TeamShare:register:code:",60L,SECONDS),
     LOGIN_USER("TeamShare:login:",60L,MINUTES),
     USER("TeamShare:user:",60L,MINUTES),
-    TEAM("TeamShare:team:",60L,MINUTES);
+    TEAM("TeamShare:team:",60L,MINUTES),
+    CATEGORY("TeamShare:category:",60L,MINUTES),
+    CATEGORY_LIST("TeamShare:category:",60L,MINUTES),
+    TAG("TeamShare:tag:",60L,MINUTES),
+    TAG_LIST("TeamShare:tag:",60L,MINUTES);
 
     /**
      * key前缀

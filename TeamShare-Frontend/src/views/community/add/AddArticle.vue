@@ -19,16 +19,16 @@
             <!-- 分类 -->
             <el-form-item label="分类：" prop="category">
                 <el-select v-model="form.category" placeholder="文章所属分类" style="width: 100%;">
-                    <el-option v-for="item in state.categoryOptions" :key="item.value" :label="item.label"
-                        :value="item.value" />
+                    <el-option v-for="item in state.categoryOptions" :key="item.categoryId" :label="item.categoryName"
+                        :value="item.categoryId" />
                 </el-select>
             </el-form-item>
             <!-- 标签 -->
             <el-form-item label="标签：" prop="tags">
                 <el-select v-model="form.tags" filterable allow-create multiple placeholder="请选择文章标签" style="width: 100%;">
-                    <el-option-group v-for="group in state.tagOptions" :key="group.label" :label="group.label">
-                        <el-option v-for="item in group.options" :key="item.value" :label="item.label"
-                            :value="item.value" />
+                    <el-option-group v-for="group in state.tagOptions" :key="group.tagId" :label="group.tagName">
+                        <el-option v-for="item in group.childrenTags" :key="item.tagId" :label="item.tagName"
+                            :value="item.tagId" />
                     </el-option-group>
                 </el-select>
             </el-form-item>
@@ -49,6 +49,7 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
+import { getCategoryAllList,getTagAllList } from '@/api/community.js'
 
 const router = useRouter()
 const articleFormRef = ref('')
@@ -88,113 +89,8 @@ const rules = reactive({
 })
 // 页面状态
 const state = reactive({
-    categoryOptions: [
-        {
-            value: 'Option1',
-            label: 'Option1',
-        },
-        {
-            value: 'Option2',
-            label: 'Option2',
-        },
-        {
-            value: 'Option3',
-            label: 'Option3',
-        },
-        {
-            value: 'Option4',
-            label: 'Option4',
-        },
-        {
-            value: 'Option5',
-            label: 'Option5',
-        },
-    ],
-    tagOptions: [
-        {
-            label: '专业技能',
-            options: [
-                {
-                    value: 'Java',
-                    label: 'Java',
-                },
-                {
-                    value: 'C++',
-                    label: 'C++',
-                },
-                {
-                    value: 'Python',
-                    label: 'Python',
-                },
-                {
-                    value: 'C',
-                    label: 'C',
-                },
-                {
-                    value: 'Go',
-                    label: 'Go',
-                },
-                {
-                    value: 'C#',
-                    label: 'C#',
-                },
-                {
-                    value: 'PHP',
-                    label: 'PHP',
-                },
-            ],
-        },
-        {
-            label: '发展方向',
-            options: [
-                {
-                    value: '前端',
-                    label: '前端',
-                },
-                {
-                    value: '后端',
-                    label: '后端',
-                },
-                {
-                    value: '算法',
-                    label: '算法',
-                },
-                {
-                    value: '网络',
-                    label: '网络',
-                },
-                {
-                    value: '测试',
-                    label: '测试',
-                },
-                {
-                    value: '嵌入式',
-                    label: '嵌入式',
-                },
-            ],
-        },
-        {
-            label: '当前状态',
-            options: [
-                {
-                    value: '大学生',
-                    label: '大学生',
-                },
-                {
-                    value: '已就业',
-                    label: '已就业',
-                },
-                {
-                    value: '单身',
-                    label: '单身',
-                },
-                {
-                    value: '学习中',
-                    label: '学习中',
-                },
-            ],
-        },
-    ]
+    categoryOptions: [],
+    tagOptions: []
 })
 
 // 发布按钮响应
@@ -225,6 +121,22 @@ const handleCreated = (editor) => {
 
 // 发送请求获取页面所需分类和标签内容
 onMounted(() => {
+    // 获取分类列表
+    getCategoryAllList().then(res => {
+        if(res.data.code === 200) {
+            state.categoryOptions = res.data.data
+        }
+    }).catch(() => {
+        console.log('请求发送失败');
+    })
+    // 获取标签列表
+    getTagAllList().then(res => {
+        if(res.data.code === 200) {
+            state.tagOptions = res.data.data
+        }
+    }).catch(() => {
+        console.log('请求发送失败');
+    })
     
 })
 

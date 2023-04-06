@@ -1,6 +1,6 @@
 <!-- 文章搜索 -->
 <template>
-    <el-card class="form-wrapper hidden-xs-only">
+    <el-card class="form-wrapper">
         <div class="card-content">
             <el-input v-model="state.searchInput" placeholder="请输入你想搜索的文章吧（回车进行搜索）" 
             :prefix-icon="Search" clearable class="left-element" @keyup.enter="search"/>
