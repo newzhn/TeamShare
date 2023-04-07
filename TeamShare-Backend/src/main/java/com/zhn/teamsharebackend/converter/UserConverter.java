@@ -34,6 +34,9 @@ public class UserConverter implements Converter<User, UserDTO, UserVo> {
 
     @Override
     public UserVo dtoToVo(UserDTO userDto) {
+        if (userDto == null) {
+            return null;
+        }
         UserVo userVo = BeanUtil.copyProperties(userDto, UserVo.class,"gender");
         userVo.setGender(userDto.getGender() == 0 ? "女" : "男");
         return userVo;

@@ -11,7 +11,7 @@ import com.zhn.teamsharebackend.domain.Result;
  * @author zhn
  * @version 1.0
  */
-public interface CRUDTemplate<T,R> extends IService<T> {
+public interface ServiceTemplate<T,R> extends IService<T> {
     /**
      * Create result.
      *

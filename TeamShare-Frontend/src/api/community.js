@@ -16,3 +16,17 @@ export function getTagAllList() {
         method:'Get'
     })
 }
+
+// 发送请求发布文章
+export function addArticle(form) {
+    return axios({
+        url:'article/',
+        method:'Post',
+        data:{
+            title: form.title,
+            content: form.content,
+            categoryId: form.category,
+            tagIds: form.tags
+        }
+    })
+}

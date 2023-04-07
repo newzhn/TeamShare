@@ -11,7 +11,7 @@ import java.util.List;
 * @description 针对表【category(文章分类表)】的数据库操作Service
 * @createDate 2023-04-06 18:02:50
 */
-public interface CategoryService extends CRUDTemplate<Category,CategotyVo> {
+public interface CategoryService extends ServiceTemplate<Category,CategotyVo> {
 
     Result<List<CategotyVo>> getCategoryList();
 }

@@ -47,6 +47,11 @@ public class Article implements Serializable {
     private String likes;
 
     /**
+     * 文章分类Id
+     */
+    private Long categoryId;
+
+    /**
      * 作者ID
      */
     private Long authorId;
@@ -92,6 +97,7 @@ public class Article implements Serializable {
             && (this.getArticleStatus() == null ? other.getArticleStatus() == null : this.getArticleStatus().equals(other.getArticleStatus()))
             && (this.getReadingVolume() == null ? other.getReadingVolume() == null : this.getReadingVolume().equals(other.getReadingVolume()))
             && (this.getLikes() == null ? other.getLikes() == null : this.getLikes().equals(other.getLikes()))
+            && (this.getCategoryId() == null ? other.getCategoryId() == null : this.getCategoryId().equals(other.getCategoryId()))
             && (this.getAuthorId() == null ? other.getAuthorId() == null : this.getAuthorId().equals(other.getAuthorId()))
             && (this.getTagIds() == null ? other.getTagIds() == null : this.getTagIds().equals(other.getTagIds()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
@@ -109,6 +115,7 @@ public class Article implements Serializable {
         result = prime * result + ((getArticleStatus() == null) ? 0 : getArticleStatus().hashCode());
         result = prime * result + ((getReadingVolume() == null) ? 0 : getReadingVolume().hashCode());
         result = prime * result + ((getLikes() == null) ? 0 : getLikes().hashCode());
+        result = prime * result + ((getCategoryId() == null) ? 0 : getCategoryId().hashCode());
         result = prime * result + ((getAuthorId() == null) ? 0 : getAuthorId().hashCode());
         result = prime * result + ((getTagIds() == null) ? 0 : getTagIds().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
@@ -129,6 +136,7 @@ public class Article implements Serializable {
         sb.append(", articleStatus=").append(articleStatus);
         sb.append(", readingVolume=").append(readingVolume);
         sb.append(", likes=").append(likes);
+        sb.append(", categoryId=").append(categoryId);
         sb.append(", authorId=").append(authorId);
         sb.append(", tagIds=").append(tagIds);
         sb.append(", createTime=").append(createTime);

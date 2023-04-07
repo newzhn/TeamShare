@@ -39,7 +39,12 @@ public class ArticleDto {
     /**
      * 文章点赞用户id列表
      */
-    private String likes;
+    private List<Long> likeIds;
+
+    /**
+     * 文章分类Id
+     */
+    private Long categoryId;
 
     /**
      * 作者ID
@@ -49,7 +54,7 @@ public class ArticleDto {
     /**
      * json格式标签Id列表
      */
-    private String tagIds;
+    private List<Long> tagIds;
 
     /**
      * 发布时间
@@ -67,6 +72,11 @@ public class ArticleDto {
     private Integer isDelete;
 
     /**
+     * 分类信息
+     */
+    private CategoryDto category;
+
+    /**
      * 作者信息
      */
     private UserDTO author;
@@ -75,4 +85,9 @@ public class ArticleDto {
      * 标签列表
      */
     private List<TagDto> tags;
+
+    /**
+     * 点赞用户信息
+     */
+    private List<UserDTO> likes;
 }

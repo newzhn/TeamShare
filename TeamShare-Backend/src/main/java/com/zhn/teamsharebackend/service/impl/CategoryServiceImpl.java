@@ -16,6 +16,7 @@ import com.zhn.teamsharebackend.utils.CacheUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,9 +57,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
 
     @Override
     public CategotyVo convert(Category category) {
+        cacheUtil.set(CacheConstant.CATEGORY,category.getCategoryId(),category);
         CategoryDto categoryDto = categoryConverter.doToDto(category);
-        cacheUtil.set(CacheConstant.CATEGORY,categoryDto.getCategoryId(),categoryDto);
         return categoryConverter.dtoToVo(categoryDto);
+    }
+
+    @Override
+    public Category getById(Serializable id) {
+        return cacheUtil.queryWithPassThrough(CacheConstant.CATEGORY,id,Category.class,super::getById);
     }
 
     @Override

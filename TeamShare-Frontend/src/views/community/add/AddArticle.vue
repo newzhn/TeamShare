@@ -49,7 +49,7 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
-import { getCategoryAllList,getTagAllList } from '@/api/community.js'
+import { getCategoryAllList,getTagAllList,addArticle } from '@/api/community.js'
 
 const router = useRouter()
 const articleFormRef = ref('')
@@ -70,7 +70,7 @@ const form = reactive({
 const rules = reactive({
     title: [
         { required: true, message: '文章标题不能为空哦', trigger: 'blur' },
-        { min: 5, max: 20, message: '标题长度必须要在5-20字符之间', trigger: 'blur' },
+        { min: 3, max: 20, message: '标题长度必须要在3-20字符之间', trigger: 'blur' },
     ],
     category: [
         {
@@ -101,10 +101,16 @@ const onSubmit = async (formEl) => {
         return
     }
     await formEl.validate((valid, fields) => {
+        // 校验通过则发送add请求
         if (valid) {
-        console.log('submit!')
-        } else {
-        console.log('error submit!', fields)
+            addArticle(form).then(res => {
+                if(res.data.code === 200) {
+                    ElMessage.success('发布文章成功')
+                    setTimeout(() => {router.push('/community')},2000)
+                }
+            }).catch(() => {
+                console.log('请求发送失败');
+            })
         }
     })
 }
@@ -137,7 +143,6 @@ onMounted(() => {
     }).catch(() => {
         console.log('请求发送失败');
     })
-    
 })
 
 // 组件销毁时，也及时销毁编辑器

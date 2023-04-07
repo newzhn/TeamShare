@@ -17,6 +17,7 @@ import com.zhn.teamsharebackend.utils.CacheUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -56,9 +57,14 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
 
     @Override
     public TagVo convert(Tag tag) {
+        cacheUtil.set(CacheConstant.TAG,tag.getTagId(),tag);
         TagDto tagDto = tagConverter.doToDto(tag);
-        cacheUtil.set(CacheConstant.TAG,tagDto.getTagId(),tagDto);
         return tagConverter.dtoToVo(tagDto);
+    }
+
+    @Override
+    public Tag getById(Serializable id) {
+        return cacheUtil.queryWithPassThrough(CacheConstant.TAG,id,Tag.class,super::getById);
     }
 
     @Override

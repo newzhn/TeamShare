@@ -1,12 +1,15 @@
 package com.zhn.teamsharebackend.utils;
 
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.Team;
 import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.domain.User;
 import com.zhn.teamsharebackend.domain.dto.UserDTO;
+import com.zhn.teamsharebackend.domain.request.ArticleRequest;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +20,8 @@ import java.util.List;
  * @version 1.0
  */
 public class ValidateUtil {
+    private static final String NULL_CONTENT = "<p><br></p>";
+
     public static Result<Boolean> registerValidate(String userName,String email,String qq,String password,String code) {
         if(StrUtil.isAllBlank(userName,email,qq,password,code)) {
             return Result.fail(ErrorCode.NULL_PARAMS_ERROR, true, "注册信息存在空数据");
@@ -101,6 +106,26 @@ public class ValidateUtil {
         }
         if(tagNames.size() > 5) {
             return Result.fail(ErrorCode.PARAMS_ERROR, true, "用户标签数量不能大于5个");
+        }
+        return Result.ok(false);
+    }
+
+    public static Result<Boolean> articleValidate(ArticleRequest request) {
+        String title = request.getTitle();
+        String content = request.getContent();
+        Long categoryId = request.getCategoryId();
+        List<Long> tagIds = request.getTagIds();
+        if (StrUtil.isBlank(title) || NULL_CONTENT.equals(content) || categoryId == null || tagIds == null) {
+            return Result.fail(ErrorCode.NULL_PARAMS_ERROR, true, "表单数据不能出现空数据");
+        }
+        if (title.length() < 3 || title.length() > 20) {
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "文章标题长度不符合规定");
+        }
+        if (categoryId <= 0) {
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "文章所属分类不符合规定");
+        }
+        if (tagIds.size() == 0 || tagIds.size() > 5) {
+            return Result.fail(ErrorCode.PARAMS_ERROR, true, "文章标签个数必须大于1小于等于5");
         }
         return Result.ok(false);
     }

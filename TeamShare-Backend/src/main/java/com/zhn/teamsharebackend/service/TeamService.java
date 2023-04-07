@@ -12,7 +12,7 @@ import java.util.List;
  * @description 针对表【team(队伍表)】的数据库操作Service
  * @createDate 2023-03-04 15:58:14
  */
-public interface TeamService extends CRUDTemplate<Team, TeamVo> {
+public interface TeamService extends ServiceTemplate<Team, TeamVo> {
     /**
      * 加入队伍
      *

@@ -32,14 +32,14 @@ public class ArticleVo {
     private Integer readingVolume;
 
     /**
-     * 文章点赞用户id列表
-     */
-    private String likes;
-
-    /**
      * 发布时间
      */
     private Date createTime;
+
+    /**
+     * 分类信息
+     */
+    private CategotyVo category;
 
     /**
      * 作者信息
@@ -50,4 +50,9 @@ public class ArticleVo {
      * 标签列表
      */
     private List<TagVo> tags;
+
+    /**
+     * 点赞用户信息
+     */
+    private List<UserVo> likes;
 }

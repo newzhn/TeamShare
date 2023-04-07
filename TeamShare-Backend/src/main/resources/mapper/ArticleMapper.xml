@@ -11,6 +11,7 @@
             <result property="articleStatus" column="article_status" jdbcType="INTEGER"/>
             <result property="readingVolume" column="reading_volume" jdbcType="INTEGER"/>
             <result property="likes" column="likes" jdbcType="VARCHAR"/>
+            <result property="categoryId" column="category_id" jdbcType="BIGINT"/>
             <result property="authorId" column="author_id" jdbcType="BIGINT"/>
             <result property="tagIds" column="tag_ids" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
@@ -20,7 +21,7 @@
 
     <sql id="Base_Column_List">
         article_id,title,content,article_status,
-        reading_volume,likes,author_id,tag_ids
+        reading_volume,likes,category_id,author_id,tag_ids
         create_time,update_time,is_delete
     </sql>
 </mapper>
