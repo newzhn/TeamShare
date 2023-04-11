@@ -5,7 +5,8 @@ import { ElMessage } from "element-plus";
 
 // 创建配置axios
 const newAxios = axios.create({
-    baseURL: 'http://localhost:8088/api',
+    //baseURL: 'http://localhost:8088/api',
+    baseURL: 'http://'+import.meta.env.VITE_BACKEND_HOST+':'+import.meta.env.VITE_BACKEND_PORT+'/api',
     timeout: 10000,
     // withCredentials: false
 })

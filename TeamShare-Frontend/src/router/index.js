@@ -45,6 +45,13 @@ const routes = [
         meta: { title: '发布文章 - 每天都是不一样' },
       },
       {
+        name:'article',
+        path:'/community/article/:id',
+        component:() => import('@/views/community/article/Article.vue'),
+        meta: { title: '文章 - 每天都是不一样' },
+        props: { default: true, sidebar: false }
+      },
+      {
         name:'info',
         path:'/info',
         component:() => import('@/views/info/Info.vue'),
