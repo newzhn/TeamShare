@@ -1,5 +1,6 @@
 package com.zhn.teamsharebackend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhn.teamsharebackend.converter.ArticleConverter;
 import com.zhn.teamsharebackend.converter.CategoryConverter;
@@ -74,28 +75,48 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
 
     @Override
     public ArticleVo convert(Article article) {
-        return null;
+        ArticleDto articleDto = articleConverter.doToDto(article);
+        Long authorId = articleDto.getAuthorId();
+        Long categoryId = articleDto.getCategoryId();
+        List<Long> tagIds = articleDto.getTagIds();
+        UserDTO author = userConverter.doToDto(userService.getById(authorId));
+        CategoryDto category = categoryConverter.doToDto(categoryService.getById(categoryId));
+        List<TagDto> tags = tagIds.stream()
+                .map(tagId -> tagConverter.doToDto(tagService.getById(tagId))).collect(Collectors.toList());
+        articleDto.setAuthor(author);
+        articleDto.setCategory(category);
+        articleDto.setTags(tags);
+        return articleConverter.dtoToVo(articleDto);
     }
 
     @Override
     public Result<List<ArticleVo>> getArticleListPage() {
-        List<Article> articleList = this.list();
-        List<ArticleDto> articleDtoList = articleConverter.doToDtoList(articleList);
+        QueryWrapper<Article> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("create_time");
+        List<Article> articleList = this.list(wrapper);
         //遍历查找作者信息，分类信息，标签信息
-        for (ArticleDto articleDto : articleDtoList) {
-            Long authorId = articleDto.getAuthorId();
-            Long categoryId = articleDto.getCategoryId();
-            List<Long> tagIds = articleDto.getTagIds();
-            UserDTO author = userConverter.doToDto(userService.getById(authorId));
-            CategoryDto category = categoryConverter.doToDto(categoryService.getById(categoryId));
-            List<TagDto> tags = tagIds.stream()
-                    .map(tagId -> tagConverter.doToDto(tagService.getById(tagId))).collect(Collectors.toList());
-            articleDto.setAuthor(author);
-            articleDto.setCategory(category);
-            articleDto.setTags(tags);
-        }
+        List<ArticleVo> articleVoList = articleList.stream().map(this::convert).collect(Collectors.toList());
+        return Result.ok(articleVoList);
+    }
 
-        List<ArticleVo> articleVoList = articleConverter.dtoToVoList(articleDtoList);
+    @Override
+    public Result<List<ArticleVo>> searchArticleList(String searchText) {
+        QueryWrapper<Article> wrapper = new QueryWrapper<>();
+        wrapper.like("title",searchText).orderByDesc("create_time");
+        List<Article> articleList = this.list(wrapper);
+        //遍历查找作者信息，分类信息，标签信息
+        List<ArticleVo> articleVoList = articleList.stream().map(this::convert).collect(Collectors.toList());
+        return Result.ok(articleVoList);
+    }
+
+    @Override
+    public Result<List<ArticleVo>> getMustReadArticleList() {
+        QueryWrapper<Article> wrapper = new QueryWrapper<>();
+        //按阅读量降序排序，取前9条
+        wrapper.orderByDesc("reading_volume").last("limit 9");
+        List<Article> articleList = this.list(wrapper);
+        List<ArticleVo> articleVoList = articleList.stream()
+                .map(this::convert).collect(Collectors.toList());
         return Result.ok(articleVoList);
     }
 }

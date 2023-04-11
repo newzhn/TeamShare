@@ -1,8 +1,8 @@
 package com.zhn.teamsharebackend.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.zhn.teamsharebackend.converter.ArticleConverter;
-import com.zhn.teamsharebackend.domain.Article;
 import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.dto.ArticleDto;
 import com.zhn.teamsharebackend.domain.request.ArticleRequest;
@@ -42,5 +42,18 @@ public class ArticleController {
     public Result<List<ArticleVo>> getArticleList() {
 
         return articleService.getArticleListPage();
+    }
+
+    @GetMapping("/search/{searchText}")
+    public Result<List<ArticleVo>> searchArticleList(@PathVariable("searchText") String searchText) {
+        if (StrUtil.isBlank(searchText)) {
+            return this.getArticleList();
+        }
+        return articleService.searchArticleList(searchText);
+    }
+
+    @GetMapping("/mustRead")
+    public Result<List<ArticleVo>> getMustReadArticleList() {
+        return articleService.getMustReadArticleList();
     }
 }

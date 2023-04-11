@@ -25,7 +25,7 @@
             </el-form-item>
             <!-- 标签 -->
             <el-form-item label="标签：" prop="tags">
-                <el-select v-model="form.tags" filterable allow-create multiple placeholder="请选择文章标签" style="width: 100%;">
+                <el-select v-model="form.tags" filterable multiple placeholder="请选择文章标签" style="width: 100%;">
                     <el-option-group v-for="group in state.tagOptions" :key="group.tagId" :label="group.tagName">
                         <el-option v-for="item in group.childrenTags" :key="item.tagId" :label="item.tagName"
                             :value="item.tagId" />

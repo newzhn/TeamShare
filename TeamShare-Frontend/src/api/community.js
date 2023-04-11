@@ -30,3 +30,27 @@ export function addArticle(form) {
         }
     })
 }
+
+// 获取最新文章列表
+export function getArticleList() {
+    return axios({
+        url:'article/list',
+        method:'Get'
+    })
+}
+
+// 模糊查询标题获取文章列表
+export function searchArticleList(searchText) {
+    return axios({
+        url:'article/search/' + searchText,
+        method:'Get'
+    })
+}
+
+// 获取必读榜文章数据
+export function getMustReadArticleList() {
+    return axios({
+        url:'article/mustRead',
+        method:'Get'
+    })
+}

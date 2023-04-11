@@ -74,7 +74,7 @@ public class ArticleConverter implements Converter<Article, ArticleDto, ArticleV
         List<Long> tagIds = articleDto.getTagIds();
         article.setCategoryId(articleDto.getCategoryId());
         article.setLikes(likeIds == null ? null : gson.toJson(likeIds));
-        article.setTagIds(likeIds == null ? null : gson.toJson(tagIds));
+        article.setTagIds(tagIds == null ? null : gson.toJson(tagIds));
         return article;
     }
 }

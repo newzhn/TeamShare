@@ -4,7 +4,7 @@
         <el-tab-pane label="个人Blog" name="first"></el-tab-pane>
         <el-tab-pane label="热点分享" name="second"></el-tab-pane>
         <!-- 文章列表面板 -->
-        <ArticleListPane></ArticleListPane>
+        <ArticleListPane :articleTab="activeName"></ArticleListPane>
     </el-tabs>
 </template>
 

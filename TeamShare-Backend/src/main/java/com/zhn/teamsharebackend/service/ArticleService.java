@@ -14,4 +14,8 @@ import java.util.List;
 public interface ArticleService extends ServiceTemplate<Article, ArticleVo> {
 
     Result<List<ArticleVo>> getArticleListPage();
+
+    Result<List<ArticleVo>> searchArticleList(String searchText);
+
+    Result<List<ArticleVo>> getMustReadArticleList();
 }
