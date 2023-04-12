@@ -2,6 +2,7 @@ package com.zhn.teamsharebackend.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.converter.ArticleConverter;
 import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.dto.ArticleDto;
@@ -36,6 +37,14 @@ public class ArticleController {
         //通过则调用服务
         ArticleDto articleDto = BeanUtil.copyProperties(request, ArticleDto.class);
         return articleService.create(articleConverter.dtoToDo(articleDto));
+    }
+
+    @GetMapping("/{id}")
+    public Result<ArticleVo> getArticle(@PathVariable("id")Long id) {
+        if (id == null || id <= 0) {
+            return Result.fail(ErrorCode.PARAMS_ERROR,"文章信息不存在");
+        }
+        return articleService.get(id);
     }
 
     @GetMapping("/list")

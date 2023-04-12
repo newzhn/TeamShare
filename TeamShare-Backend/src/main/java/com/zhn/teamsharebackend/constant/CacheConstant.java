@@ -1,5 +1,7 @@
 package com.zhn.teamsharebackend.constant;
 
+import com.zhn.teamsharebackend.domain.Article;
+
 import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.*;
@@ -20,7 +22,8 @@ public enum CacheConstant {
     CATEGORY("TeamShare:category:",60L,MINUTES),
     CATEGORY_LIST("TeamShare:category:",60L,MINUTES),
     TAG("TeamShare:tag:",60L,MINUTES),
-    TAG_LIST("TeamShare:tag:",60L,MINUTES);
+    TAG_LIST("TeamShare:tag:",60L,MINUTES),
+    ARTICLE("TeamShare:article:",60L,MINUTES);
 
     /**
      * key前缀

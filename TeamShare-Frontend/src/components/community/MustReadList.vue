@@ -8,7 +8,7 @@
             <el-row>
                 <span :style="{color: index < 3 ? 'orange' : 'gray', marginRight: '0.7em'}">{{ index + 1 }}</span>
                 <el-avatar :size="20" :src="item.author.avatarUrl" style="margin-right: 0.5em;"/>
-                <el-link :underline="false" class="title-link">面试题 | {{ item.title }}</el-link>
+                <el-link @click="toArticle(item.articleId)" :underline="false" class="title-link">面试题 | {{ item.title }}</el-link>
             </el-row>
             <p class="content" v-html="item.content"></p>
         </div>
@@ -18,11 +18,18 @@
 <script setup>
 import { reactive,onMounted } from 'vue';
 import { getMustReadArticleList } from '@/api/community.js'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const state = reactive({
     loading:false,
     mustReadList:[]
 })
+
+const toArticle = (id) => {
+    const url='/community/article/' + id
+    router.push(url)
+}
 
 onMounted(() => {
     state.loading = true

@@ -54,3 +54,11 @@ export function getMustReadArticleList() {
         method:'Get'
     })
 }
+
+// 根据Id获取文章详细信息
+export function getArticleDetail(id) {
+    return axios({
+        url:'article/' + id,
+        method:'Get'
+    })
+}

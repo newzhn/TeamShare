@@ -2,6 +2,8 @@ package com.zhn.teamsharebackend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhn.teamsharebackend.constant.CacheConstant;
+import com.zhn.teamsharebackend.constant.ErrorCode;
 import com.zhn.teamsharebackend.converter.ArticleConverter;
 import com.zhn.teamsharebackend.converter.CategoryConverter;
 import com.zhn.teamsharebackend.converter.TagConverter;
@@ -18,10 +20,12 @@ import com.zhn.teamsharebackend.mapper.ArticleMapper;
 import com.zhn.teamsharebackend.service.CategoryService;
 import com.zhn.teamsharebackend.service.TagService;
 import com.zhn.teamsharebackend.service.UserService;
+import com.zhn.teamsharebackend.utils.CacheUtil;
 import com.zhn.teamsharebackend.utils.UserHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,6 +51,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     private CategoryConverter categoryConverter;
     @Resource
     private TagConverter tagConverter;
+    @Resource
+    private CacheUtil cacheUtil;
 
     @Override
     public Result<Boolean> create(Article article) {
@@ -70,7 +76,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
 
     @Override
     public Result<ArticleVo> get(long id) {
-        return null;
+        Article article = this.getById(id);
+        if (article == null) {
+            return Result.fail(ErrorCode.PARAMS_ERROR,"文章信息不存在");
+        }
+        ArticleVo articleVo = this.convert(article);
+        return Result.ok(articleVo);
+    }
+
+    @Override
+    public Article getById(Serializable id) {
+        return cacheUtil.queryWithPassThrough(CacheConstant.ARTICLE,id,Article.class,super::getById);
     }
 
     @Override

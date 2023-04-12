@@ -37,6 +37,11 @@ public class ArticleVo {
     private Date createTime;
 
     /**
+     * 修改时间
+     */
+    private Date updateTime;
+
+    /**
      * 分类信息
      */
     private CategotyVo category;

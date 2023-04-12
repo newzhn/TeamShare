@@ -4,7 +4,7 @@
         <!-- 作者头像、文章分类|标题 -->
         <el-row style="margin-bottom: 1em;">
             <el-avatar :size="25" :src="item.author.avatarUrl" style="margin-right: 1em;;"/>
-            <el-link @click="getArticle(item.articleId)" :underline="false" class="title-link">
+            <el-link @click="toArticle(item.articleId)" :underline="false" class="title-link">
                 {{ item.category.categoryName }} | {{ item.title }}
             </el-link>
         </el-row>
@@ -42,13 +42,15 @@
 
 <script setup>
 import { defineProps } from 'vue'
+import { useRouter } from 'vue-router'
 import dateFilter from '@/utils/time.js'
 
+const router = useRouter()
 const props = defineProps(['articleList'])
 
-const getArticle = (id) => {
-    const url='http://localhost:5173/community/article/' + id
-    window.open(url);
+const toArticle = (id) => {
+    const url='/community/article/' + id
+    router.push(url)
 }
 </script>
 
