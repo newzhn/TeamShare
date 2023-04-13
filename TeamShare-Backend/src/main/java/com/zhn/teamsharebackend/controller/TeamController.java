@@ -101,4 +101,9 @@ public class TeamController {
         }
         return teamService.search(searchText,teamStatus);
     }
+
+    @GetMapping("/recommendList")
+    public Result<List<TeamVo>> getRecommendList() {
+        return teamService.getRecommendTeamList();
+    }
 }

@@ -65,4 +65,14 @@ public class ArticleController {
     public Result<List<ArticleVo>> getMustReadArticleList() {
         return articleService.getMustReadArticleList();
     }
+
+    @GetMapping("/recommendList")
+    public Result<List<ArticleVo>> getRecommendList() {
+        return articleService.getRecommendArticleList();
+    }
+
+    @GetMapping("/recentPosts")
+    public Result<List<ArticleVo>> getRecentPosts() {
+        return articleService.getRecentPosts();
+    }
 }

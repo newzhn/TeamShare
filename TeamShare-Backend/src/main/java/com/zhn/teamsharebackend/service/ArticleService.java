@@ -18,4 +18,8 @@ public interface ArticleService extends ServiceTemplate<Article, ArticleVo> {
     Result<List<ArticleVo>> searchArticleList(String searchText);
 
     Result<List<ArticleVo>> getMustReadArticleList();
+
+    Result<List<ArticleVo>> getRecommendArticleList();
+
+    Result<List<ArticleVo>> getRecentPosts();
 }

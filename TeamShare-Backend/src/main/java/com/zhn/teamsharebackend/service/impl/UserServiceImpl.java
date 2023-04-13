@@ -1,6 +1,7 @@
 package com.zhn.teamsharebackend.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.gson.Gson;
 import com.zhn.teamsharebackend.constant.CacheConstant;
@@ -19,7 +20,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
 * @author zhanh
@@ -103,6 +106,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         cacheUtil.delete(CacheConstant.USER.getKeyPrefix() + user.getUserId());
         this.updateById(user);
         return Result.ok(true);
+    }
+
+    @Override
+    public Result<List<UserVo>> getRecommendUserList() {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.orderByAsc("RAND()");
+        wrapper.last("LIMIT 5");
+        List<User> userList = this.list(wrapper);
+        List<UserVo> userVoList = userList.stream().map(this::convert).collect(Collectors.toList());
+        return Result.ok(userVoList);
     }
 
     private void updateCacheUser(UserDTO userDTO,String token) {

@@ -135,6 +135,32 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
                 .map(this::convert).collect(Collectors.toList());
         return Result.ok(articleVoList);
     }
+
+    @Override
+    public Result<List<ArticleVo>> getRecommendArticleList() {
+        //按照阅读量降序排列，获取前五个公开的文章
+        QueryWrapper<Article> wrapper = new QueryWrapper<>();
+        wrapper.eq("article_status",1)
+                .orderByDesc("reading_volume")
+                .last("LIMIT 4");
+        List<Article> articleList = this.list(wrapper);
+        List<ArticleVo> articleVoList = articleList.stream()
+                .map(this::convert).collect(Collectors.toList());
+        return Result.ok(articleVoList);
+    }
+
+    @Override
+    public Result<List<ArticleVo>> getRecentPosts() {
+        //获取最新的五篇文章
+        QueryWrapper<Article> wrapper = new QueryWrapper<>();
+        wrapper.eq("article_status",1)
+                .orderByDesc("create_time")
+                .last("LIMIT 5");
+        List<Article> articleList = this.list(wrapper);
+        List<ArticleVo> articleVoList = articleList.stream()
+                .map(this::convert).collect(Collectors.toList());
+        return Result.ok(articleVoList);
+    }
 }
 
 

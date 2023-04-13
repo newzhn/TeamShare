@@ -6,7 +6,7 @@
         </div>
         <div class="resource_layout">
             <!-- 推荐好友展示列表 -->
-            <div v-for="(user,index) in recomendUserList" :key="user.userId">
+            <div v-for="(user,index) in state.recommendUserList" :key="user.userId">
                 <el-row :gutter="10">
                     <el-space :size="0">
                         <!-- 头像 -->
@@ -25,7 +25,7 @@
                                 <!-- 标签,只展示两个标签 -->
                                 <el-row>
                                     <el-space>
-                                        <el-tag v-if="user.tagNames" v-for="tagIndex in 2" type="info" effect="light" size="small">{{ user.tagNames[tagIndex - 1] }}</el-tag>
+                                        <el-tag v-if="user.tagNames.length != 0" v-for="tagIndex in 2" type="info" effect="light" size="small">{{ user.tagNames[tagIndex - 1] }}</el-tag>
                                         <el-tag type="info" effect="light" size="small">....</el-tag>
                                     </el-space>
                                 </el-row>
@@ -33,7 +33,7 @@
                         </el-col>
                     </el-space>
                 </el-row>
-                <el-divider v-if="index != recomendUserList.length - 1" style="margin-top: 8px;margin-bottom: 8px;"/>
+                <el-divider v-if="index != state.recommendUserList.length - 1" style="margin-top: 8px;margin-bottom: 8px;"/>
             </div>
         </div>
     </el-card>
@@ -45,22 +45,14 @@ import { getRecommandUsers } from '@/api/home.js';
 import { reactive } from 'vue';
 
 const state = reactive({
-    loading:true
+    loading:true,
+    recommendUserList:[]
 })
-const recomendUserList = ref([])
 
 onMounted(async () => {
     await getRecommandUsers().then(res => {
-        if(res.data.code === 200) {
-            state.loading = false
-            const userListData = res.data.data;
-            userListData.forEach(user => {
-                if(user.tagNames){
-                    user.tagNames = JSON.parse(user.tagNames)
-                }
-            });
-            recomendUserList.value = userListData
-        }
+        state.recommendUserList = res.data.data
+        state.loading = false
     }).catch(() => {
         console.log('请求发送失败');
     })

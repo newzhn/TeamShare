@@ -8,6 +8,7 @@ import com.zhn.teamsharebackend.converter.TeamConverter;
 import com.zhn.teamsharebackend.converter.UserConverter;
 import com.zhn.teamsharebackend.domain.Result;
 import com.zhn.teamsharebackend.domain.Team;
+import com.zhn.teamsharebackend.domain.User;
 import com.zhn.teamsharebackend.domain.dto.TeamDTO;
 import com.zhn.teamsharebackend.domain.dto.UserDTO;
 import com.zhn.teamsharebackend.domain.vo.TeamVo;
@@ -249,6 +250,17 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
     public void changeMemberIds(List<Long> memberIds, Long teamId) {
         this.updateById(new Team(teamId,gson.toJson(memberIds)));
         stringRedisTemplate.delete(CacheConstant.TEAM.getKeyPrefix() + teamId);
+    }
+
+    @Override
+    public Result<List<TeamVo>> getRecommendTeamList() {
+        QueryWrapper<Team> wrapper = new QueryWrapper<>();
+        wrapper.eq("team_status",1);
+        wrapper.orderByAsc("RAND()");
+        wrapper.last("LIMIT 2");
+        List<Team> teamList = this.list(wrapper);
+        List<TeamVo> teamVoList = teamList.stream().map(this::convert).collect(Collectors.toList());
+        return Result.ok(teamVoList);
     }
 
     /**

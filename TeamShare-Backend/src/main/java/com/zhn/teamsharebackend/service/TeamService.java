@@ -56,4 +56,6 @@ public interface TeamService extends ServiceTemplate<Team, TeamVo> {
     Result<List<TeamVo>> search(String searchText, int teamStatus);
 
     void changeMemberIds(List<Long> memberIds,Long teamId);
+
+    Result<List<TeamVo>> getRecommendTeamList();
 }

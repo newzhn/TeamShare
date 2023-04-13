@@ -44,9 +44,8 @@ public class UserController {
         return userService.getLoginUser(token);
     }
 
-    @GetMapping("/recommend")
-    public Result<List<User>> getRecommendUsers() {
-        List<User> users = userService.query().list();
-        return Result.ok(users);
+    @GetMapping("/recommendList")
+    public Result<List<UserVo>> getRecommendUsers() {
+        return userService.getRecommendUserList();
     }
 }

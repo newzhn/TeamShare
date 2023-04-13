@@ -5,20 +5,18 @@
             <h3 class="title"><b>文章推荐</b></h3>
         </div>
         <div class="resource_layout">
-            <div v-for="(item,index) in articleList">
+            <div v-for="(item,index) in state.recommendArticleList">
                 <div class="contentBox" v-if="index===0">
-                    <a :href="'/articleDetails/'+item.articleId" :title="item.articleTitle">
-                        <img v-if="item.articleImgLitimg" class="bannerImg" :src="item.articleImgLitimg"
-                            :alt="item.articleTitle">
-                        <h4 class="title">{{item.articleTitle}}</h4>
-                        <p>{{item.articleClassifyName}} · {{item.publishTime}}</p>
+                    <a :href="'/community/article/'+item.articleId" :title="item.title">
+                        <h4 class="title">{{item.title}}</h4>
+                        <p>{{item.category.categoryName}} · {{dateFilter(item.createTime)}}</p>
                     </a>
                 </div>
-                <div class="contentBox item" v-if="index > 0">
-                    <spana :href="'/articleDetails/'+item.articleId" :title="item.articleTitle">
+                <div class="contentBox item">
+                    <spana :href="'/community/article/'+item.articleId" :title="item.title">
                         <div class="articleContent">
-                            <h4 class="title">{{item.articleTitle}}</h4>
-                            <p>{{item.articleClassifyName}} · {{item.publishTime}}</p>
+                            <h4 class="title">{{item.title}}</h4>
+                            <p>{{item.category.categoryName}} · {{dateFilter(item.createTime)}}</p>
                         </div>
                     </spana>
                 </div>
@@ -28,37 +26,24 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
+import { getRecommandArticleList } from '@/api/home.js'
+import dateFilter from '@/utils/time.js'
 
 const state = reactive({
-    loading:false
+    loading:true,
+    recommendArticleList:[]
 })
-const articleList = reactive([
-    {
-        articleId:1,
-        articleTitle:'剑指Offer图解',
-        articleImgLitimg:'',
-        articleClassifyName:'张三',
-        publishTime:'2023/2/23',
 
-    },
-    {
-        articleId:1,
-        articleTitle:'Mysql的几种日志类型区别',
-        articleImgLitimg:'',
-        articleClassifyName:'李四',
-        publishTime:'2023/2/23',
-
-    },
-    {
-        articleId:1,
-        articleTitle:'JDK代理和CGLIB代理区别',
-        articleImgLitimg:'',
-        articleClassifyName:'王五',
-        publishTime:'2023/2/23',
-
-    },
-])
+onMounted(() => {
+    getRecommandArticleList().then(res => {
+        state.recommendArticleList = res.data.data
+        state.loading = false
+    }).catch(() => {
+        console.log('请求发送失败');
+    })
+    
+})
 </script>
 
 <style scoped>
