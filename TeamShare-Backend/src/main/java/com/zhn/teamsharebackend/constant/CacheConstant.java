@@ -23,7 +23,8 @@ public enum CacheConstant {
     CATEGORY_LIST("TeamShare:category:",60L,MINUTES),
     TAG("TeamShare:tag:",60L,MINUTES),
     TAG_LIST("TeamShare:tag:",60L,MINUTES),
-    ARTICLE("TeamShare:article:",60L,MINUTES);
+    ARTICLE("TeamShare:article:",60L,MINUTES),
+    COMMENT("TeamShare:article:",60L,MINUTES);
 
     /**
      * key前缀

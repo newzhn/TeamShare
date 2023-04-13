@@ -12,8 +12,7 @@
             <result property="commentStatus" column="comment_status" jdbcType="INTEGER"/>
             <result property="parentCommentId" column="parent_comment_id" jdbcType="BIGINT"/>
             <result property="articleId" column="article_id" jdbcType="BIGINT"/>
-            <result property="userId" column="user_id" jdbcType="BIGINT"/>
-            <result property="isAuthor" column="is_author" jdbcType="TINYINT"/>
+            <result property="authorId" column="author_id" jdbcType="BIGINT"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
@@ -22,7 +21,7 @@
     <sql id="Base_Column_List">
         comment_id,avatar_url,nickname,
         content,comment_status,parent_comment_id,
-        article_id,user_id,is_author,
+        article_id,author_id,
         create_time,update_time,is_delete
     </sql>
 </mapper>

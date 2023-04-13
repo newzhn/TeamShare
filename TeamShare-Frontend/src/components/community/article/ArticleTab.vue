@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import ArticleListPane from '@/components/community/ArticleListPane.vue'
+import ArticleListPane from '@/components/community/article/ArticleListPane.vue'
 import { ref } from 'vue'
 
 const activeName = ref('first')

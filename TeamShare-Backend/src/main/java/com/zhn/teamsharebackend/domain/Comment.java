@@ -54,12 +54,7 @@ public class Comment implements Serializable {
     /**
      * 评论人ID
      */
-    private Long userId;
-
-    /**
-     * 是否是文章作者评论，0不是，1是
-     */
-    private Integer isAuthor;
+    private Long authorId;
 
     /**
      * 评论时间
@@ -98,8 +93,7 @@ public class Comment implements Serializable {
             && (this.getCommentStatus() == null ? other.getCommentStatus() == null : this.getCommentStatus().equals(other.getCommentStatus()))
             && (this.getParentCommentId() == null ? other.getParentCommentId() == null : this.getParentCommentId().equals(other.getParentCommentId()))
             && (this.getArticleId() == null ? other.getArticleId() == null : this.getArticleId().equals(other.getArticleId()))
-            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
-            && (this.getIsAuthor() == null ? other.getIsAuthor() == null : this.getIsAuthor().equals(other.getIsAuthor()))
+            && (this.getAuthorId() == null ? other.getAuthorId() == null : this.getAuthorId().equals(other.getAuthorId()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()));
@@ -116,8 +110,7 @@ public class Comment implements Serializable {
         result = prime * result + ((getCommentStatus() == null) ? 0 : getCommentStatus().hashCode());
         result = prime * result + ((getParentCommentId() == null) ? 0 : getParentCommentId().hashCode());
         result = prime * result + ((getArticleId() == null) ? 0 : getArticleId().hashCode());
-        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
-        result = prime * result + ((getIsAuthor() == null) ? 0 : getIsAuthor().hashCode());
+        result = prime * result + ((getAuthorId() == null) ? 0 : getAuthorId().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
@@ -137,8 +130,7 @@ public class Comment implements Serializable {
         sb.append(", commentStatus=").append(commentStatus);
         sb.append(", parentCommentId=").append(parentCommentId);
         sb.append(", articleId=").append(articleId);
-        sb.append(", userId=").append(userId);
-        sb.append(", isAuthor=").append(isAuthor);
+        sb.append(", authorId=").append(authorId);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", isDelete=").append(isDelete);

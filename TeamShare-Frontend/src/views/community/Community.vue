@@ -14,8 +14,8 @@
 </template>
 
 <script setup>
-import MustReadList from '../../components/community/MustReadList.vue';
-import ArticleTab from '@/components/community/ArticleTab.vue'
+import MustReadList from '../../components/community/article/MustReadList.vue';
+import ArticleTab from '@/components/community/article/ArticleTab.vue'
 
 </script>
 

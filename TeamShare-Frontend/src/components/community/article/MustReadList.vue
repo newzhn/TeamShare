@@ -1,18 +1,20 @@
 <!-- 必读榜卡片 -->
 <template>
-    <el-card class="resource" v-loading="state.loading" element-loading-text="玩命加载中..." shadow="hover">
-        <div class="resource_title">
-            <h3 class="title"><b>必读榜</b></h3>
-        </div>
-        <div v-for="(item, index) in state.mustReadList" :key="item.articleId">
-            <el-row>
-                <span :style="{color: index < 3 ? 'orange' : 'gray', marginRight: '0.7em'}">{{ index + 1 }}</span>
-                <el-avatar :size="20" :src="item.author.avatarUrl" style="margin-right: 0.5em;"/>
-                <el-link @click="toArticle(item.articleId)" :underline="false" class="title-link">面试题 | {{ item.title }}</el-link>
-            </el-row>
-            <p class="content" v-html="item.content"></p>
-        </div>
-    </el-card>
+    <el-affix :offset="12">
+        <el-card class="resource" v-loading="state.loading" element-loading-text="玩命加载中..." shadow="hover">
+            <div class="resource_title">
+                <h3 class="title"><b>必读榜</b></h3>
+            </div>
+            <div v-for="(item, index) in state.mustReadList" :key="item.articleId">
+                <el-row>
+                    <span :style="{color: index < 3 ? 'orange' : 'gray', marginRight: '0.7em'}">{{ index + 1 }}</span>
+                    <el-avatar :size="20" :src="item.author.avatarUrl" style="margin-right: 0.5em;"/>
+                    <el-link @click="toArticle(item.articleId)" :underline="false" class="title-link">面试题 | {{ item.title }}</el-link>
+                </el-row>
+                <p class="content" v-html="item.content"></p>
+            </div>
+        </el-card>
+    </el-affix>
 </template>
 
 <script setup>

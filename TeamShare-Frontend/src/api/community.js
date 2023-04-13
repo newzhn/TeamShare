@@ -62,3 +62,27 @@ export function getArticleDetail(id) {
         method:'Get'
     })
 }
+
+// 根据文章id获取其评论数据
+export function getCommentList(articleId) {
+    return axios({
+        url:'comment/publicList/' + articleId,
+        method:'Get',
+    })
+}
+
+// 添加评论
+export function addComment(userInfo,content,articleId,parentCommentId) {
+    return axios({
+        url:'comment/',
+        method:'Post',
+        data:{
+            avatarUrl:userInfo.avatarUrl,
+            nickname:userInfo.nickname,
+            content,
+            parentCommentId,
+            articleId,
+            authorId:userInfo.userId
+        }
+    })
+}
